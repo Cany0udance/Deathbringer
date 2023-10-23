@@ -1,0 +1,65 @@
+[
+  {
+    "PROPER_NAME": "Shadow",
+    "NAMES": [
+      "shadow"
+    ],
+    "DESCRIPTION": "Whenever you play a Shadow card, another random Shadow card in your hand is also played at half effectiveness."
+  },
+  {
+    "PROPER_NAME": "Shadowplay",
+    "NAMES": [
+      "shadowplay"
+    ],
+    "DESCRIPTION": "Activates a special effect when the card is played through the Shadow mechanic."
+  },
+  {
+    "PROPER_NAME": "Progressive",
+    "NAMES": [
+      "progressive"
+    ],
+    "DESCRIPTION": "A card with Progressive can be permanently Upgraded by fulfilling the Progressive condition."
+  },
+  {
+    "PROPER_NAME": "Strangle",
+    "NAMES": [
+      "strangle"
+    ],
+    "DESCRIPTION": "Strangled creatures take damage equal to their Strangle count whenever an Attack is played."
+  },
+  {
+    "PROPER_NAME": "This is displayed in the tooltip.",
+    "NAMES": [
+      "these",
+      "are",
+      "detected",
+      "in",
+      "the",
+      "text"
+    ],
+    "DESCRIPTION": "This is displayed in the tooltip. Spaces should not be used be avoided in NAMES, with the exception of multi-word keywords (see next entry)."
+  },
+  {
+    "PROPER_NAME": "Multiword Keyword",
+    "NAMES": [
+      "multiword keyword",
+      "multiword_keyword",
+      "multiword_keywords"
+    ],
+    "DESCRIPTION": "Make sure the first element in NAMES has no underscores. The rest should use _ in the place of spaces. In card text, you'll use the underscore versions."
+  },
+  {
+    "PROPER_NAME": "Outburst",
+    "NAMES": [
+      "outburst"
+    ],
+    "DESCRIPTION": "When you reach #b5 Outburst, trigger an explosion that deals #b50 damage to EVERYONE. You cannot lose more than #b25 HP per trigger."
+  },
+  {
+    "PROPER_NAME": "Due",
+    "NAMES": [
+      "due"
+    ],
+    "DESCRIPTION": "Whenever an enemy with Due dies, gain #yStrength and #yDexterity equal to the amount of Due the enemy had, then transfer remaining Due to another enemy. Due is reduced by #b1 at the start of your turn."
+  }
+]

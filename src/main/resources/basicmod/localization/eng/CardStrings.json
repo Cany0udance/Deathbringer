@@ -1,0 +1,355 @@
+{
+  "${modID}:ExampleCard": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description.",
+    "UPGRADE_DESCRIPTION": "This will automatically be used if the card is upgraded. Remove it if unneeded.",
+    "EXTENDED_DESCRIPTION": [
+      "You can put more text in here.",
+      "If you need to use it for stuff.",
+      "Blizzard is a good example for this."
+    ]
+  },
+  "${modID}:Initiate": {
+    "NAME": "Initiate",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy has full health, double the damage and gain that much Block next turn.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL If the enemy has full health, triple the damage and gain that much Block next turn."
+  },
+  "${modID}:Quench": {
+    "NAME": "Quench",
+    "DESCRIPTION": "Deal !D! damage. NL Increase the damage dealt by !M! for each potion drank this combat."
+  },
+  "${modID}:Sightread": {
+    "NAME": "Sightread",
+    "DESCRIPTION": "If the enemy's health equals or exceeds yours, gain 2 Dexterity. NL Otherwise, gain 2 Strength. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "If the enemy's health equals or exceeds yours, gain 2 Dexterity. NL Otherwise, gain 2 Strength. NL Exhaust."
+  },
+  "${modID}:Fracture": {
+    "NAME": "Fracture",
+    "DESCRIPTION": "Deal !D! damage twice. NL For each unblocked hit, the enemy loses 1 Strength this turn."
+  },
+  "${modID}:FromHell": {
+    "NAME": "From Hell",
+    "DESCRIPTION": "ALL enemies gain !M! Vulnerable. NL Exhaust ALL cards in your hand and gain Strength and ${modID}:Outburst equal to the cards Exhausted."
+  },
+  "${modID}:Extinction": {
+    "NAME": "Extinction",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, ALL future instances of this enemy will die upon spawning. NL Exhaust."
+  },
+  "${modID}:Shadowstep": {
+    "NAME": "Shadowstep",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !B! Block. NL Draw 2 cards."
+  },
+  "${modID}:Pocket": {
+    "NAME": "Pocket",
+    "DESCRIPTION": "Draw !M! cards. NL Discard a card. NL Exhaust. NL ${modID}:Progressive - Draw a Rare card with this card.",
+    "UPGRADE_DESCRIPTION": "Draw !M! cards. NL Discard a card. NL Exhaust."
+  },
+  "${modID}:Protrusion": {
+    "NAME": "Protrusion",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !B! Block. NL ${modID}:Shadowplay - Gain !M! Thorns."
+  },
+  "${modID}:Mantle": {
+    "NAME": "Mantle",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !B! Block. NL ${modID}:Shadowplay - Gain [E]."
+  },
+  "${modID}:SubconsciousKiller": {
+    "NAME": "Subconscious Killer",
+    "DESCRIPTION": "${modID}:Shadow. NL Unplayable. NL ${modID}:Shadowplay - Gain 2 Strength and !M! Vigor.",
+    "UPGRADE_DESCRIPTION": "Retain. NL ${modID}:Shadow. NL Unplayable. NL ${modID}:Shadowplay - Gain 2 Strength and !M! Vigor.",
+    "EXTENDED_DESCRIPTION": [
+      "This card is literally unplayable!"
+    ]
+  },
+  "${modID}:Injection": {
+    "NAME": "Injection",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL If this deals unblocked damage, apply !M! Poison. NL ${modID}:Shadowplay - Play this card at full effect. "
+  },
+  "${modID}:VanishingAct": {
+    "NAME": "Vanishing Act",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !M! Dexterity. NL ${modID}:Shadowplay - Retain your hand this turn. NL Exhaust."
+  },
+  "${modID}:Admire": {
+    "NAME": "Admire",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL If the enemy blocks this hit, gain !M! *Plated *Armor and draw a card."
+  },
+  "${modID}:Eclipse": {
+    "NAME": "Eclipse",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL ${modID}:Shadowplay - Swap the contents of your draw and discard piles."
+  },
+  "${modID}:Shroud": {
+    "NAME": "Shroud",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !B! Block. NL Increase the Block of ALL Shroud cards by 2 this combat."
+  },
+  "${modID}:Strangulate": {
+    "NAME": "Strangulate",
+    "DESCRIPTION": "Apply !M! ${modID}:Strangle. NL ${modID}:Progressive - Play this card on an enemy that has at least 15 ${modID}:Strangle.",
+    "UPGRADE_DESCRIPTION": "Apply !M! ${modID}:Strangle."
+  },
+  "${modID}:Discretion": {
+    "NAME": "Discretion",
+    "DESCRIPTION": "Innate. NL Apply !M! Poison. NL Exhaust."
+  },
+  "${modID}:Humiliate": {
+    "NAME": "Humiliate",
+    "DESCRIPTION": "Remove ALL your Strength. NL ALL enemies loses just as much Strength. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Remove ALL your Strength. NL ALL enemies lose twice as much Strength. NL Exhaust."
+  },
+  "${modID}:Gauze": {
+    "NAME": "Gauze",
+    "DESCRIPTION": "Gain !B! Block 4 times. NL Heal 3 HP."
+  },
+  "${modID}:OnlyADream": {
+    "NAME": "Only A Dream",
+    "DESCRIPTION": "Choose a common or basic card in your hand. NL Exhaust it, then play a copy of it each turn. NL Exhaust."
+  },
+  "${modID}:Slipup": {
+    "NAME": "Slipup",
+    "DESCRIPTION": "${modID}:Shadow. NL Unplayable. NL ${modID}:Shadowplay - Gain 3 ${modID}:Outburst.",
+    "EXTENDED_DESCRIPTION": [
+      "This card is literally unplayable!"
+    ]
+  },
+  "${modID}:Imprudence": {
+    "NAME": "Imprudence",
+    "DESCRIPTION": "Shuffle your discard pile into your draw pile. NL Draw up to !M! ${modID}:Shadow cards. NL Add 1 Slipup to your hand."
+  },
+  "${modID}:Nope": {
+    "NAME": "Nope",
+    "DESCRIPTION": "Innate. NL Ethereal. NL Lose 5 HP. NL Escape from a non-boss combat.",
+    "UPGRADE_DESCRIPTION": "Innate. NL Ethereal. NL Escape from a non-boss combat.",
+    "EXTENDED_DESCRIPTION": [
+      "I'm surrounded!"
+    ]
+  },
+  "${modID}:Bulwark": {
+    "NAME": "Bulwark",
+    "DESCRIPTION": "Gain !B! Block for each enemy in combat. NL ${modID}:Progressive - Play this card while there are at least 4 enemies in combat.",
+    "UPGRADE_DESCRIPTION": "Gain !B! Block for each enemy in combat."
+  },
+  "${modID}:FinishTheJob": {
+    "NAME": "Finish The Job",
+    "DESCRIPTION": "Deal !D! damage to ALL enemies. NL If combat doesn't end after this is played, die. NL Exhaust.",
+    "EXTENDED_DESCRIPTION": [
+      "I'm not that desperate yet!"
+    ]
+  },
+  "${modID}:ReactiveNet": {
+    "NAME": "Reactive Net",
+    "DESCRIPTION": "Apply !M! *Plated *Armor. NL End your turn. NL The next time this enemy's Block is broken, they gain ${modID}:Strangle equal to their *Plated *Armor count.",
+    "UPGRADE_DESCRIPTION": "Apply !M! *Plated *Armor. NL End your turn. NL The next time this enemy's Block is broken, convert their *Plated *Armor to ${modID}:Strangle."
+  },
+  "${modID}:Desperation": {
+    "NAME": "Desperation",
+    "DESCRIPTION": "Gain [E] [E]. NL Gain !M! ${modID}:Outburst. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Gain [E] [E]. NL Gain !M! ${modID}:Outburst. NL Draw a card. NL Exhaust."
+  },
+  "${modID}:Control": {
+    "NAME": "Control",
+    "DESCRIPTION": "Remove ALL your ${modID}:Outburst. NL Gain !M! Artifact. NL Exhaust."
+  },
+  "${modID}:Disengage": {
+    "NAME": "Disengage",
+    "DESCRIPTION": "Gain !B! Block. NL If you have any ${modID}:Outburst, gain an additional !M! Block."
+  },
+  "${modID}:Moratorium": {
+    "NAME": "Moratorium",
+    "DESCRIPTION": "Gain !B! Block. NL Gain !M! ${modID}:Outburst. NL Exhaust."
+  },
+  "${modID}:Sanctuary": {
+    "NAME": "Sanctuary",
+    "DESCRIPTION": "${modID}:Shadow. NL Unplayable. NL ${modID}:Shadowplay - Draw !M! cards.",
+    "EXTENDED_DESCRIPTION": [
+      "This card is literally unplayable!"
+    ]
+  },
+  "${modID}:Defend": {
+    "NAME": "Defend",
+    "DESCRIPTION": "Gain !B! Block."
+  },
+  "${modID}:Hide": {
+    "NAME": "Hide",
+    "DESCRIPTION": "Gain !B! Block for each ${modID}:Shadow card in your hand. NL ${modID}:Progressive - Play this card while there are at least 3 ${modID}:Shadow cards in your hand.",
+    "UPGRADE_DESCRIPTION": "Retain. NL Gain !B! Block for each ${modID}:Shadow card in your hand."
+  },
+  "${modID}:EscapeArtist": {
+    "NAME": "Escape Artist",
+    "DESCRIPTION": "You can't play Attacks for !M! turns. NL When this wears off, gain 6 Strength and [E] [E] . NL Exhaust."
+  },
+  "${modID}:Liability": {
+    "NAME": "Liability",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage !M! times. NL Gain 2 ${modID}:Outburst. NL ${modID}:Shadowplay - Lower your Max HP by 2."
+  },
+  "${modID}:Expurgate": {
+    "NAME": "Expurgate",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL Lose !M! HP."
+  },
+  "${modID}:ShadowStrike": {
+    "NAME": "Shadow Strike",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL ${modID}:Shadowplay - Apply !M! Weak to a random enemy."
+  },
+  "${modID}:UnknownDepths": {
+    "NAME": "Unknown Depths",
+    "DESCRIPTION": "Add a random ${modID}:Shadow card into your hand. NL It costs 0 this turn. NL Exhaust."
+  },
+  "${modID}:Arsenal": {
+    "NAME": "Arsenal",
+    "DESCRIPTION": "Draw !M! cards. NL For each ${modID}:Shadow card drawn, gain !B! Block and 1 ${modID}:Outburst."
+  },
+  "${modID}:Pounce": {
+    "NAME": "Pounce",
+    "DESCRIPTION": "Deal !D! damage. NL Gain 1 ${modID}:Outburst."
+  },
+  "${modID}:ChainedHits": {
+    "NAME": "Chained Hits",
+    "DESCRIPTION": "Deal !D! damage !M! times. NL Increase the number of hits by 1 this combat."
+  },
+  "${modID}:Grasp": {
+    "NAME": "Grasp",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy is at or below 50% HP, apply !M! ${modID}:Strangle."
+  },
+  "${modID}:NecroticJab": {
+    "NAME": "Necrotic Jab",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy has ${modID}:Strangle, gain !B! Block."
+  },
+  "${modID}:NothingPersonal": {
+    "NAME": "Nothing Personal",
+    "DESCRIPTION": "If the enemy doesn't intend to attack, deal !D! damage and gain !B! Block next turn."
+  },
+  "${modID}:Gamify": {
+    "NAME": "Gamify",
+    "DESCRIPTION": "Gain !M! Vigor for each enemy in combat."
+  },
+  "${modID}:Perturb": {
+    "NAME": "Perturb",
+    "DESCRIPTION": "Deal !D! damage. NL ALL other enemies gain !M! Weak."
+  },
+  "${modID}:HoldThis": {
+    "NAME": "Hold This",
+    "DESCRIPTION": "Deal !D! damage. NL Plant a *Sticky *Bomb on an enemy that will deal !M! damage in 3 turns."
+  },
+  "${modID}:TunnelVision": {
+    "NAME": "Tunnel Vision",
+    "DESCRIPTION": "Discarded if not the first card played while in hand. NL Deal !D! damage and apply !M! Vulnerable. NL Discard non-adjacent cards."
+  },
+  "${modID}:OlReliable": {
+    "NAME": "Ol' Reliable",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy intends to attack, gain !B! Block."
+  },
+  "${modID}:Seethe": {
+    "NAME": "Seethe",
+    "DESCRIPTION": "Exhaust ALL your non-Attack cards. NL Deal !D! damage for each card Exhausted. NL Gain 1 Strength."
+  },
+  "${modID}:Onslaught": {
+    "NAME": "Onslaught",
+    "DESCRIPTION": "Deal !D! damage repeatedly until the enemy dies. NL For each hit it takes, lose 4 HP."
+  },
+  "${modID}:QuickKick": {
+    "NAME": "Quick Kick",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy has less HP than you, *Stun them and gain 2 ${modID}:Outburst."
+  },
+  "${modID}:Breach": {
+    "NAME": "Breach",
+    "DESCRIPTION": "Deal !D! damage !M! times. NL If this breaks the enemy's Block, remove all their Artifact, apply 5 Vulnerable, and *Stun them. NL Exhaust."
+  },
+  "${modID}:Tragedy": {
+    "NAME": "Tragedy",
+    "DESCRIPTION": "Deal !D! damage !M! times. NL ${modID}:Progressive - Use this card while you have at least 5 Strength.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage !M! times."
+  },
+  "${modID}:SewingNeedle": {
+    "NAME": "Sewing Needle",
+    "DESCRIPTION": "Deal !D! damage to ALL enemies. NL ALL enemies gain !M! ${modID}:Strangle."
+  },
+  "${modID}:CleanKill": {
+    "NAME": "Clean Kill",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal and exactly lethal, permanently start each combat with 1 more Strength. NL Exhaust."
+  },
+  "${modID}:Cobra": {
+    "NAME": "Cobra",
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy has ${modID}:Strangle, convert it to Poison and triple it. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL If the enemy has ${modID}:Strangle, convert it to Poison and quadruple it. NL Exhaust."
+  },
+  "${modID}:Harvest": {
+    "NAME": "Harvest",
+    "DESCRIPTION": "Deal !D! damage. NL If Fatal, draw 2 cards and reduce their cost to 0 this turn."
+  },
+  "${modID}:SkeletalFinger": {
+    "NAME": "Skeletal Finger",
+    "DESCRIPTION": "Deal !D! damage. NL If this deals unblocked damage, enemy loses HP equal to its current Attack intent.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage twice. NL If this deals unblocked damage, enemy loses HP equal to its current Attack intent."
+  },
+  "${modID}:RideTheHigh": {
+    "NAME": "Ride The High",
+    "DESCRIPTION": "Deal !D! damage. NL Heal !M! HP. NL Gain 4 ${modID}:Outburst."
+  },
+  "${modID}:Strike": {
+    "NAME": "Strike",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "${modID}:Excel": {
+    "NAME": "Excel",
+    "DESCRIPTION": "Innate. NL Can only be played on turn 1. NL If you finish combat without taking attack damage, raise your Max HP by !M!.",
+    "EXTENDED_DESCRIPTION": [
+      "It's too late to excel!"
+    ]
+  },
+  "${modID}:Nooseweaver": {
+    "NAME": "Nooseweaver",
+    "DESCRIPTION": "At the end of your turn, ALL enemies gain 1 ${modID}:Strangle for each card played that turn."
+  },
+  "${modID}:Nightlight": {
+    "NAME": "Nightlight",
+    "DESCRIPTION": "Retain. NL Discard a card. NL Apply !M! Weak to EVERYONE.",
+    "UPGRADE_DESCRIPTION": "Retain. NL Discard a card. NL Apply !M! Weak to ALL enemies."
+
+  },
+  "${modID}:Indoctrinate": {
+    "NAME": "Indoctrinate",
+    "DESCRIPTION": "Apply !M!X ${modID}:Strangle and 2X Strength to ALL enemies. NL Exhaust."
+  },
+  "${modID}:Opening": {
+    "NAME": "Opening",
+    "DESCRIPTION": "At the start of your turn, if no enemies intend to Attack, gain !M! Vigor."
+  },
+  "${modID}:RiskyBusiness": {
+    "NAME": "Risky Business",
+    "DESCRIPTION": "Whenever you gain ${modID}:Outburst, draw a card.",
+    "UPGRADE_DESCRIPTION": "Whenever you gain ${modID}:Outburst, draw 2 cards."
+  },
+  "${modID}:Thrive": {
+    "NAME": "Thrive",
+    "DESCRIPTION": "The next time you trigger ${modID}:Outburst, gain !M! HP."
+  },
+  "${modID}:Veil": {
+    "NAME": "Veil",
+    "DESCRIPTION": "The first ${modID}:Shadowplay effect played each turn gets played an additional time."
+  },
+  "${modID}:AssassinForm": {
+    "NAME": "Assassin Form",
+    "DESCRIPTION": "At the start of your turn, trigger the ${modID}:Shadowplay effect of all ${modID}:Shadowplay cards in your hand."
+  },
+  "${modID}:Dominate": {
+    "NAME": "Dominate",
+    "DESCRIPTION": "Whenever you apply ${modID}:Strangle to an enemy, also apply 1 Weak and 1 Vulnerable."
+  },
+  "${modID}:Trade": {
+    "NAME": "Trade",
+    "DESCRIPTION": "${modID}:Shadow cards can no longer be played. NL At the beginning AND end of your turn, for each ${modID}:Shadow card in your hand, gain !M! Block."
+  },
+  "${modID}:Threshold": {
+    "NAME": "Threshold",
+    "DESCRIPTION": "${modID}:Outburst deals !M! more damage to enemies."
+  },
+  "${modID}:ShadowDefend": {
+    "NAME": "Shadow Defend",
+    "DESCRIPTION": "${modID}:Shadow. NL Gain !B! Block. NL ${modID}:Shadowplay - Apply !M! Vulnerable to a random enemy."
+  },
+  "${modID}:ConcealedBlade": {
+    "NAME": "Concealed Blade",
+    "DESCRIPTION": "${modID}:Shadow. NL Deal !D! damage. NL ${modID}:Shadowplay - Draw an additional card next turn."
+  },
+  "${modID}:Intuition": {
+    "NAME": "Intuition",
+    "DESCRIPTION": "${modID}:Shadow. NL Next turn, gain !B! Block."
+  }
+}

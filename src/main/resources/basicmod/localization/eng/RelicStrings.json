@@ -1,0 +1,44 @@
+{
+  "${modID}:RelicID": {
+    "NAME": "Good Relic",
+    "FLAVOR": "Flavor text displayed in detailed relic view.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. [E] is an energy icon."
+    ]
+  },
+  "${modID}:OminousNote": {
+    "NAME": "Ominous Note",
+    "FLAVOR": "Maybe taking jobs in the Foglands wasn't such a bright idea.",
+    "DESCRIPTIONS": [
+      "Whenever a card is played by #y${modID}:Shadow, apply #b2 #yPoison to a random enemy."
+    ]
+  },
+  "${modID}:ShatteredCompass": {
+    "NAME": "Shattered Compass",
+    "FLAVOR": "This magical compass guides you to your next target...or so it used to, anyway.",
+    "DESCRIPTIONS": [
+      "The first card played by #y${modID}:Shadow each combat is played at full effect."
+    ]
+  },
+  "${modID}:RepairedCompass": {
+    "NAME": "Repaired Compass",
+    "FLAVOR": "Much better.",
+    "DESCRIPTIONS": [
+      "Replaces [#811414]Shattered[] [#811414]Compass[]. The first card played by #y${modID}:Shadow each turn is played at full effect."
+    ]
+  },
+  "${modID}:ArchitectsNail": {
+    "NAME": "Architect's Nail",
+    "FLAVOR": "\"It seems to react dynamically to external forces. Don't touch it!\" - Ranwid",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #yThorns equal to the number of times you were attacked last turn."
+    ]
+  },
+  "${modID}:MarbleSandal": {
+    "NAME": "Marble Sandal",
+    "FLAVOR": "\"Why are they still here?\"",
+    "DESCRIPTIONS": [
+      "At the start of multi-enemy combats, apply #b3 #y${modID}:Due to a random enemy."
+    ]
+  }
+}
