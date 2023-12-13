@@ -18,7 +18,7 @@ import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 public class Slipup extends BaseCard {
     public static final String ID = makeID("Slipup");
     private static final CardStats info = new CardStats(
-            Deathbringer.Enums.CARD_COLOR,
+            CardColor.COLORLESS,
             CardType.STATUS,
             CardRarity.SPECIAL,
             CardTarget.NONE,

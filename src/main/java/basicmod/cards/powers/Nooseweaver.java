@@ -28,7 +28,6 @@ public class Nooseweaver extends BaseCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // Apply 1 stack of NooseweaverPower to the player
         addToBot(new ApplyPowerAction(p, p, new NooseweaverPower(p, 1), 1));
     }
 

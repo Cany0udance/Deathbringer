@@ -96,7 +96,7 @@
   },
   "${modID}:Gauze": {
     "NAME": "Gauze",
-    "DESCRIPTION": "Gain !B! Block 4 times. NL Heal 3 HP."
+    "DESCRIPTION": "Gain !B! Block 4 times. NL Gain 5 ${modID}:Temporary_HP."
   },
   "${modID}:OnlyADream": {
     "NAME": "Only A Dream",
@@ -115,11 +115,7 @@
   },
   "${modID}:Nope": {
     "NAME": "Nope",
-    "DESCRIPTION": "Innate. NL Ethereal. NL Lose 5 HP. NL Escape from a non-boss combat.",
-    "UPGRADE_DESCRIPTION": "Innate. NL Ethereal. NL Escape from a non-boss combat.",
-    "EXTENDED_DESCRIPTION": [
-      "I'm surrounded!"
-    ]
+    "DESCRIPTION": "Innate. NL Gain !M! ${modID}:Temporary_HP. NL You cannot gain Block from cards for 2 turns. NL Exhaust."
   },
   "${modID}:Bulwark": {
     "NAME": "Bulwark",

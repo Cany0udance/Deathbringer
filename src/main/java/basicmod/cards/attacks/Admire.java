@@ -1,4 +1,4 @@
-package basicmod.cards.skills;
+package basicmod.cards.attacks;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;

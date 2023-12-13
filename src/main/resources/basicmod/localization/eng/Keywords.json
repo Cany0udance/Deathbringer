@@ -4,14 +4,14 @@
     "NAMES": [
       "shadow"
     ],
-    "DESCRIPTION": "Whenever you play a Shadow card, another random Shadow card in your hand is also played at half effectiveness."
+    "DESCRIPTION": "Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded."
   },
   {
     "PROPER_NAME": "Shadowplay",
     "NAMES": [
       "shadowplay"
     ],
-    "DESCRIPTION": "Activates a special effect when the card is played through the Shadow mechanic."
+    "DESCRIPTION": "Activates a special effect when the card is triggered by another Shadow card being played."
   },
   {
     "PROPER_NAME": "Progressive",
@@ -19,6 +19,14 @@
       "progressive"
     ],
     "DESCRIPTION": "A card with Progressive can be permanently Upgraded by fulfilling the Progressive condition."
+  },
+  {
+    "PROPER_NAME": "Temporary HP",
+    "NAMES": [
+      "temporary hp",
+      "temporary_hp"
+    ],
+    "DESCRIPTION": "A separate HP type that goes away at the end of combat."
   },
   {
     "PROPER_NAME": "Strangle",

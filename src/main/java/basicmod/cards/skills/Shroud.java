@@ -31,6 +31,7 @@ public class Shroud extends BaseCard {
         setBlock(BLOCK, UPG_BLOCK);
     }
 
+
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new GainBlockAction(p, p, block));
@@ -49,6 +50,7 @@ public class Shroud extends BaseCard {
         addToBot(new GainBlockAction(p, p, block / 2));
         addToBot(new ShroudAction(this, 1));
     }
+
 
     @Override
     public AbstractCard makeCopy() {

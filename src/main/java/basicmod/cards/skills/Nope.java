@@ -3,12 +3,15 @@ package basicmod.cards.skills;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
 import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.NoBlockPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 import static basicmod.Deathbringer.makeID;
@@ -20,61 +23,31 @@ public class Nope extends BaseCard {
             AbstractCard.CardType.SKILL,
             CardRarity.UNCOMMON,
             CardTarget.SELF,
-            3  // Cost
+            2  // Cost
     );
+
 
     public Nope() {
         super(ID, info);
-
+        this.magicNumber = this.baseMagicNumber = 18;  // Initialize magicNumber and baseMagicNumber
         this.isInnate = true; // The card is Innate
-        this.isEthereal = true; // The card is Ethereal
+        this.exhaust = true;  // The card is exhausted after use
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // Lose 5 HP if not upgraded; no HP loss if upgraded
-        if (!upgraded) {
-            addToBot(new LoseHPAction(p, p, 5));
-        }
-
-        // Check if it's a normal combat, then escape
-        if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
-            AbstractDungeon.getCurrRoom().smoked = true;
-            AbstractDungeon.player.hideHealthBar();
-            AbstractDungeon.player.isEscaping = true;
-            AbstractDungeon.player.flipHorizontal = !AbstractDungeon.player.flipHorizontal;
-            AbstractDungeon.overlayMenu.endTurnButton.disable();
-            AbstractDungeon.player.escapeTimer = 2.5F;
-        }
+        addToBot(new AddTemporaryHPAction(p, p, magicNumber));
+        addToBot(new ApplyPowerAction(p, p, new NoBlockPower(p, 2, false), 2));
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeMagicNumber(5);
             initializeDescription();
         }
     }
-
-    @Override
-    public boolean canUse(AbstractPlayer p, AbstractMonster m) {
-        if (super.canUse(p, m)) {
-            if (p.hasPower("Surrounded")) {
-                this.cantUseMessage = cardStrings.EXTENDED_DESCRIPTION[0];
-                return false;
-            }
-
-            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-                if (monster.type == AbstractMonster.EnemyType.BOSS) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
 
     @Override
     public AbstractCard makeCopy() {

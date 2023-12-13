@@ -22,8 +22,8 @@ public class Hide extends BaseCard {
             0  // Energy cost
     );
 
-    private static final int BLOCK_PER_SHADOW = 6;
-    private static final int UPG_BLOCK_PER_SHADOW = 7;
+    private static final int BLOCK_PER_SHADOW = 7;
+    private static final int UPG_BLOCK_PER_SHADOW = 8;
 
     public Hide() {
         super(ID, info);

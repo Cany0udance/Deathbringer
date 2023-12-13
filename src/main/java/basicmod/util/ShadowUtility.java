@@ -1,5 +1,6 @@
 package basicmod.util;
 
+import basicmod.actions.ShroudAction;
 import basicmod.cards.attacks.*;
 import basicmod.cards.skills.*;
 import basicmod.cards.statuses.Slipup;

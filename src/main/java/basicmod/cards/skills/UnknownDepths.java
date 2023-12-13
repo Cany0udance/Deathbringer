@@ -4,7 +4,6 @@ import basicmod.cards.BaseCard;
 import basicmod.cards.attacks.*;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
-import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInHandAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;

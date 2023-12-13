@@ -22,7 +22,7 @@ public class Gauze extends BaseCard {
 
     private static final int BLOCK = 2;
     private static final int UPG_BLOCK = 3;  // Changed from 1 to 3 to reflect the upgraded amount
-    private static final int HEAL_AMOUNT = 3;  // Amount of HP to be healed
+    private static final int HEAL_AMOUNT = 5;  // Amount of HP to be healed
 
     private static final int TIMES = 4;  // Number of times to gain Block
 
@@ -38,7 +38,7 @@ public class Gauze extends BaseCard {
             addToBot(new GainBlockAction(p, p, this.block));
         }
         // Assume GainTempHpAction applies the temporary HP. Replace this with the actual class if different.
-        addToBot(new HealAction(p, p, HEAL_AMOUNT));    }
+        addToBot(new AddTemporaryHPAction(p, p, HEAL_AMOUNT));    }
 
     @Override
     public void upgrade() {

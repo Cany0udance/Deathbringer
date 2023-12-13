@@ -21,8 +21,8 @@ public class Mantle extends BaseCard {
             2  // Energy cost
     );
 
-    private static final int BLOCK = 10;
-    private static final int UPG_BLOCK = 4;  // Upgrades to 12
+    private static final int BLOCK = 12;
+    private static final int UPG_BLOCK = 4;  // Upgrades to 16
 
     private static final int ENERGY_GAIN = 1;
     private static final int UPG_ENERGY_GAIN = 0;  // No upgrade for Energy

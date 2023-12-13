@@ -33,8 +33,8 @@ public class Arsenal extends BaseCard implements PostDrawSubscriber {
             1
     );
 
-    private static final int BLOCK = 6;
-    private static final int UPG_BLOCK = 8;
+    private static final int BLOCK = 10;
+    private static final int UPG_BLOCK = 12;
 
     private static final int DRAW = 3;
     private static final int UPG_DRAW = 4;

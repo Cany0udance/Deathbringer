@@ -24,8 +24,8 @@ public class Moratorium extends BaseCard {
             3 // Cost
     );
 
-    private static final int BLOCK_GAIN = 75;
-    private static final int UPG_BLOCK_GAIN = 85;
+    private static final int BLOCK_GAIN = 70;
+    private static final int UPG_BLOCK_GAIN = 80;
     private static final int OUTBURST_GAIN = 3;
     private static final int UPG_OUTBURST_GAIN = 4;
 

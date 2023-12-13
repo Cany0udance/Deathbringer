@@ -53,10 +53,7 @@ public class Indoctrinate extends BaseCard {
         if (effect > 0) {
             for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
                 if (!monster.isDeadOrEscaped()) {
-                    // Apply Strangle to the enemy
                     addToBot(new ApplyPowerAction(monster, p, new StranglePower(monster, this.magicNumber * effect), this.magicNumber * effect));
-
-                    // Apply Strength to the enemy
                     addToBot(new ApplyPowerAction(monster, p, new StrengthPower(monster, STRENGTH_MULTIPLIER * effect), STRENGTH_MULTIPLIER * effect));
                 }
             }
