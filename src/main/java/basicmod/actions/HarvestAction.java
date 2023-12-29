@@ -26,7 +26,7 @@ public class HarvestAction extends AbstractGameAction {
             AbstractDungeon.effectList.add(new FlashAtkImgEffect(this.target.hb.cX, this.target.hb.cY, AttackEffect.SLASH_HORIZONTAL));
             this.target.damage(this.info);
 
-            if ((this.target.isDying || this.target.currentHealth <= 0) && !this.target.halfDead && !this.target.hasPower("Minion")) {
+            if ((this.target.isDying || this.target.currentHealth <= 0) && !this.target.halfDead) {
                 // Draw 2 cards and reduce their cost to 0
                 addToTop(new HarvestDrawAction(0));
                 addToTop(new DrawCardAction(2));

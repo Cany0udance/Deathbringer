@@ -12,17 +12,20 @@ public class QuickKickAction extends AbstractGameAction {
     private final AbstractMonster monster;
     private final int damage;
 
-    public QuickKickAction(AbstractPlayer player, AbstractMonster monster, int damage) {
+    private final int magicNumber;
+
+    public QuickKickAction(AbstractPlayer player, AbstractMonster monster, int damage, int magicNumber) {
         this.player = player;
         this.monster = monster;
         this.damage = damage;
+        this.magicNumber = magicNumber;
     }
 
     @Override
     public void update() {
         if (monster.currentHealth < player.currentHealth) {
             addToBot(new StunMonsterAction(monster, player, 1));
-            addToBot(new ApplyPowerAction(player, player, new OutburstPower(player, 2), 2));
+            addToBot(new ApplyPowerAction(player, player, new OutburstPower(player, magicNumber), magicNumber));
         }
         isDone = true;
     }

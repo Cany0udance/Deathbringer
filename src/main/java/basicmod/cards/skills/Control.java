@@ -2,12 +2,14 @@ package basicmod.cards.skills;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
+import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.ArtifactPower;
 
 public class Control extends BaseCard {
@@ -31,12 +33,22 @@ public class Control extends BaseCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // Remove all Outburst stacks
-        addToBot(new RemoveSpecificPowerAction(p, p, "Deathbringer:Outburst"));
+        // Retrieve current Outburst stacks
+        AbstractPower outburstPower = p.getPower("Deathbringer:Outburst");
+        int outburstStacks = 0;
+        if (outburstPower != null) {
+            outburstStacks = outburstPower.amount;
+        }
+
+        // Double the Outburst stacks
+        if (outburstStacks > 0) {
+            addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, outburstStacks), outburstStacks));
+        }
 
         // Apply Artifact using magicNumber
         addToBot(new ApplyPowerAction(p, p, new ArtifactPower(p, magicNumber), magicNumber));
     }
+
 
     @Override
     public AbstractCard makeCopy() {

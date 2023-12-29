@@ -23,13 +23,13 @@ public class Nope extends BaseCard {
             AbstractCard.CardType.SKILL,
             CardRarity.UNCOMMON,
             CardTarget.SELF,
-            2  // Cost
+            1  // Cost
     );
 
 
     public Nope() {
         super(ID, info);
-        this.magicNumber = this.baseMagicNumber = 18;  // Initialize magicNumber and baseMagicNumber
+        this.magicNumber = this.baseMagicNumber = 15;  // Initialize magicNumber and baseMagicNumber
         this.isInnate = true; // The card is Innate
         this.exhaust = true;  // The card is exhausted after use
     }

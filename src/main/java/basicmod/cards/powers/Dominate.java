@@ -14,7 +14,7 @@ public class Dominate extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.POWER,
-            CardRarity.RARE,
+            CardRarity.UNCOMMON,
             CardTarget.SELF,
             2  // Energy cost
     );

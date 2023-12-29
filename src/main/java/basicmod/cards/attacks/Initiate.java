@@ -2,6 +2,7 @@ package basicmod.cards.attacks;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
+import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -19,32 +20,32 @@ public class Initiate extends BaseCard {
             CardType.ATTACK,
             CardRarity.COMMON,
             CardTarget.ENEMY,
-            0 // Energy cost
+            1 // Energy cost
     );
 
-    private static final int DAMAGE = 5;
-    private static final int UPG_DAMAGE = 6; // New constant for upgraded damage
+    private static final int DAMAGE = 8;
+    private static final int UPG_DAMAGE = 11; // New constant for upgraded damage
     private static final int MULTIPLIER = 2; // Double damage
-    private static final int UPG_MULTIPLIER = 3; // Triple damage when upgraded
+    private static final int UPG_MULTIPLIER = 3; // Triple damage when
+    private static final int OUTBURST = 3;
+    private static final int UPG_OUTBURST = 1; // Upgrade amount
 
     public Initiate() {
         super(ID, info);
-
         setDamage(DAMAGE);
+        setMagic(OUTBURST, UPG_OUTBURST);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int finalDamage = this.damage;
+      //  int finalDamage = this.damage;
 
         if (m.currentHealth == m.maxHealth) {
-            finalDamage *= upgraded ? UPG_MULTIPLIER : MULTIPLIER;
-
-            // Add NextTurnBlockPower to gain Block next turn
-            addToBot(new ApplyPowerAction(p, p, new NextTurnBlockPower(p, finalDamage)));
+         //   finalDamage *= upgraded ? UPG_MULTIPLIER : MULTIPLIER;
+            addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, magicNumber)));
         }
 
-        addToBot(new DamageAction(m, new DamageInfo(p, finalDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
+        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
     }
 
     @Override
@@ -52,7 +53,7 @@ public class Initiate extends BaseCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(UPG_DAMAGE - DAMAGE); // Update the damage when upgraded
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeMagicNumber(UPG_OUTBURST);
             initializeDescription();
         }
     }

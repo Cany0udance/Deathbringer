@@ -19,24 +19,25 @@ public class Opening extends BaseCard {
             1  // Energy cost
     );
 
-    private static final int VIGOR_AMOUNT = 6;
-    private static final int UPG_VIGOR_AMOUNT = 8;
+    private static final int VIGOR_AMOUNT = 6; // Static amount, no longer a magic number
+    private static final int STRENGTH_AMOUNT = 1;
+    private static final int UPG_STRENGTH_AMOUNT = 2;
 
     public Opening() {
         super(ID, info);
-        this.magicNumber = this.baseMagicNumber = VIGOR_AMOUNT;
+        this.magicNumber = this.baseMagicNumber = STRENGTH_AMOUNT;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new ApplyPowerAction(p, p, new OpeningPower(p, this.magicNumber), this.magicNumber));
+        addToBot(new ApplyPowerAction(p, p, new OpeningPower(p, this.magicNumber, VIGOR_AMOUNT), this.magicNumber));
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeMagicNumber(UPG_VIGOR_AMOUNT - VIGOR_AMOUNT);
+            upgradeMagicNumber(UPG_STRENGTH_AMOUNT - STRENGTH_AMOUNT);
             initializeDescription();
         }
     }

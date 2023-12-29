@@ -32,7 +32,6 @@ public class FinishTheJob extends BaseCard {
     public FinishTheJob() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
-        this.exhaust = true;
     }
 
     @Override

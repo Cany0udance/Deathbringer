@@ -36,7 +36,6 @@ public class UnknownDepths extends BaseCard {
         shadowCardList.add(new Mantle());
         shadowCardList.add(new Shroud());
         shadowCardList.add(new Protrusion());
-        shadowCardList.add(new Eclipse());
         shadowCardList.add(new Liability());
         shadowCardList.add(new Injection());
         shadowCardList.add(new Admire());

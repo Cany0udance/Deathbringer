@@ -20,11 +20,11 @@ public class Perturb extends BaseCard {
             CardType.ATTACK,
             CardRarity.COMMON,
             CardTarget.ENEMY,
-            2
+            1
     );
 
-    private static final int DAMAGE = 13;
-    private static final int UPG_DAMAGE = 17;
+    private static final int DAMAGE = 8;
+    private static final int UPG_DAMAGE = 10;
 
     private static final int WEAK = 1;
     private static final int UPG_WEAK = 2;

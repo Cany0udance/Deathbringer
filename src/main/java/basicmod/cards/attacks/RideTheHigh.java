@@ -4,16 +4,19 @@ import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
+import com.evacipated.cardcrawl.mod.stslib.actions.tempHp.AddTemporaryHPAction;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.actions.common.HealAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.powers.StrengthPower;
 
 import static basicmod.Deathbringer.RED_BORDER_GLOW_COLOR;
 
@@ -27,37 +30,21 @@ public class RideTheHigh extends BaseCard {
             1 // Energy cost
     );
 
-    private static final int HEAL = 5;
-    private static final int UPG_HEAL = 2;
+    private static final int STRENGTH = 1;
     private static final int DAMAGE = 15;
     private static final int UPG_DAMAGE = 5;
-    private static final int OUTBURST = 4;
 
     public RideTheHigh() {
         super(ID, info);
         baseDamage = DAMAGE;
-        baseMagicNumber = magicNumber = HEAL;
+        baseMagicNumber = magicNumber = STRENGTH;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        addToBot(new HealAction(p, p, this.magicNumber));
-        addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, OUTBURST), OUTBURST));
-    }
-
-    @Override
-    public void triggerOnGlowCheck() {
-        // Retrieve the OutburstPower from the player if it exists
-        AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
-
-        if (outburstPower != null && outburstPower.amount >= 1) {
-            // Glow red if playing this card will trigger the Outburst explosion
-            this.glowColor = RED_BORDER_GLOW_COLOR.cpy();
-        } else {
-            // Glow blue otherwise
-            this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
-        }
+        addToBot(new AddTemporaryHPAction(p, p, 3));
+        addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, -magicNumber)));
     }
 
     @Override
@@ -70,7 +57,6 @@ public class RideTheHigh extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeDamage(UPG_DAMAGE);
-            upgradeMagicNumber(UPG_HEAL);
             initializeDescription();
         }
     }

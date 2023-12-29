@@ -22,7 +22,7 @@ import static basemod.BaseMod.logger;
 
 public class OutburstPower extends BasePower implements CloneablePowerInterface {
     public static final String POWER_ID = makeID("Outburst");
-    private static final AbstractPower.PowerType TYPE = AbstractPower.PowerType.DEBUFF;
+    private static final AbstractPower.PowerType TYPE = AbstractPower.PowerType.BUFF;
     private static final boolean TURN_BASED = false;
 
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
@@ -45,8 +45,7 @@ public class OutburstPower extends BasePower implements CloneablePowerInterface 
             logger.info("Triggering Outburst explosion");
 
             this.flash();
-            int damageToEnemies = 50;
-            int damageToPlayer = 50;
+            int damageToEnemies = 25;
 
             if (AbstractDungeon.player.hasPower(ThresholdPower.POWER_ID)) {
                 damageToEnemies += AbstractDungeon.player.getPower(ThresholdPower.POWER_ID).amount;
@@ -60,16 +59,12 @@ public class OutburstPower extends BasePower implements CloneablePowerInterface 
                 }
             }
 
-            // Show explosion effect on the player.
-            addToBot(new VFXAction(new ExplosionSmallEffect(AbstractDungeon.player.hb.cX, AbstractDungeon.player.hb.cY), 0.1F));
-
             addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(damageToEnemies, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.NONE));
-            addToBot(new DamageAction(p, new DamageInfo(p, damageToPlayer, DamageInfo.DamageType.THORNS), AbstractGameAction.AttackEffect.NONE));
 
-            if (p.hasPower(ThrivePower.POWER_ID)) {
-                ThrivePower thrivePower = (ThrivePower) p.getPower(ThrivePower.POWER_ID);
-                thrivePower.onOutburstTrigger();
-            }
+         //   if (p.hasPower(ThrivePower.POWER_ID)) {
+         //       ThrivePower thrivePower = (ThrivePower) p.getPower(ThrivePower.POWER_ID);
+         //       thrivePower.onOutburstTrigger();
+         //   }
 
             addToBot(new AbstractGameAction() {
                 @Override
@@ -80,21 +75,6 @@ public class OutburstPower extends BasePower implements CloneablePowerInterface 
             });
 
             addToBot(new RemoveSpecificPowerAction(p, p, this));
-        }
-    }
-    @Override
-    public void wasHPLost(DamageInfo info, int damageAmount) {
-        if (damageAmount > 0 && info.owner == this.owner && isOutburstInProgress) {
-            this.flash();
-
-            AbstractPlayer p = AbstractDungeon.player;
-
-            // If the original damage is greater than 25, revert and apply the cap
-            if (damageAmount > 25) {
-                p.currentHealth += damageAmount; // Add back the original damage amount
-                p.currentHealth -= 25;  // Apply the capped 25 damage
-            }
-            // Otherwise, do nothing and let the original damage go through
         }
     }
 

@@ -18,7 +18,7 @@ public class OlReliable extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.ATTACK,
-            CardRarity.COMMON,
+            CardRarity.UNCOMMON,
             CardTarget.ENEMY,
             2 // Energy cost
     );

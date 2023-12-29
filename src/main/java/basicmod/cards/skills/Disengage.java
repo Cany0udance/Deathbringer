@@ -19,8 +19,8 @@ public class Disengage extends BaseCard {
     );
 
     private static final int BASE_BLOCK = 4;
-    private static final int ADDITIONAL_BLOCK = 6;
-    private static final int UPG_ADDITIONAL_BLOCK = 10;
+    private static final int ADDITIONAL_BLOCK = 2;
+    private static final int UPG_ADDITIONAL_BLOCK = 5;
 
     public Disengage() {
         super(ID, info);

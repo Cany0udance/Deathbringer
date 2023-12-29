@@ -17,19 +17,23 @@ public class Sightread extends BaseCard {
             CardType.SKILL,
             CardRarity.UNCOMMON,
             CardTarget.ENEMY, // Target is an enemy
-            2  // Initial cost is 2
+            1
     );
+
+    private static final int STR_DEX = 2;
+    private static final int UPG_STR_DEX = 1;
 
     public Sightread() {
         super(ID, info);
+        setMagic(STR_DEX, UPG_STR_DEX);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         if (m.currentHealth >= p.currentHealth) {
-            addToBot(new ApplyPowerAction(p, p, new DexterityPower(p, 2), 2));
+            addToBot(new ApplyPowerAction(p, p, new DexterityPower(p, magicNumber), magicNumber));
         } else {
-            addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, 2), 2));
+            addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, magicNumber), magicNumber));
         }
         this.exhaust = true; // The card will exhaust after use
     }
@@ -38,7 +42,8 @@ public class Sightread extends BaseCard {
     public void upgrade() {
         if (!this.upgraded) {
             this.upgradeName();
-            this.upgradeBaseCost(1);  // Reduce the cost to 1 when upgraded
+            upgradeMagicNumber(UPG_STR_DEX);
+            initializeDescription();
         }
     }
 

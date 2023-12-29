@@ -2,6 +2,7 @@ package basicmod.cards.attacks;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
+import basicmod.powers.StranglePower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -24,28 +25,25 @@ public class NothingPersonal extends BaseCard {
             2
     );
 
-    private static final int DAMAGE = 20;
-    private static final int UPG_DAMAGE = 26;
-    private static final int BLOCK = 10;
-    private static final int UPG_BLOCK = 15;
+    private static final int DAMAGE = 13;
+    private static final int UPG_DAMAGE = 17;
+    private static final int STRANGLE = 3;
+    private static final int UPG_STRANGLE = 1; // Upgrade amount
 
     public NothingPersonal() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
-        setBlock(BLOCK, UPG_BLOCK);
+        setMagic(STRANGLE, UPG_STRANGLE);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        if (m.intent != AbstractMonster.Intent.ATTACK &&
+            addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
+        if (m == null || (m.intent != AbstractMonster.Intent.ATTACK &&
                 m.intent != AbstractMonster.Intent.ATTACK_BUFF &&
                 m.intent != AbstractMonster.Intent.ATTACK_DEBUFF &&
-                m.intent != AbstractMonster.Intent.ATTACK_DEFEND) {
-
-            addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
-            addToBot(new ApplyPowerAction(p, p, new NextTurnBlockPower(p, block), block));
-        } else {
-            AbstractDungeon.effectList.add(new ThoughtBubble(AbstractDungeon.player.dialogX, AbstractDungeon.player.dialogY, 3.0F, "That enemy intends to attack!", true));
+                m.intent != AbstractMonster.Intent.ATTACK_DEFEND)) {
+            addToBot(new ApplyPowerAction(m, p, new StranglePower(m, magicNumber), magicNumber));
         }
     }
 
@@ -59,7 +57,7 @@ public class NothingPersonal extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeDamage(UPG_DAMAGE - DAMAGE);
-            upgradeBlock(UPG_BLOCK - BLOCK);
+            upgradeMagicNumber(UPG_STRANGLE);
             initializeDescription();
         }
     }

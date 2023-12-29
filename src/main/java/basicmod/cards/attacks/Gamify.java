@@ -33,8 +33,8 @@ public class Gamify extends BaseCard {
             1
     );
 
-    private static final int TEMP_VIGOR = 2;
-    private static final int UPG_TEMP_VIGOR = 3;
+    private static final int TEMP_VIGOR = 3;
+    private static final int UPG_TEMP_VIGOR = 4;
 
     public Gamify() {
         super(ID, info);

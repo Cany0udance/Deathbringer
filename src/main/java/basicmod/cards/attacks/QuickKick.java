@@ -22,17 +22,20 @@ public class QuickKick extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.ATTACK,
-            CardRarity.UNCOMMON,
+            CardRarity.RARE,
             CardTarget.ENEMY,
             2 // Energy cost
     );
 
     private static final int DAMAGE = 3;
-    private static final int UPG_DAMAGE = 7;
+    private static final int UPG_DAMAGE = 10;
+    private static final int OUTBURST = 2;
+    private static final int UPG_OUTBURST = 1; // Upgrade amount
 
     public QuickKick() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
+        setMagic(OUTBURST, UPG_OUTBURST);
     }
 
     @Override
@@ -41,9 +44,10 @@ public class QuickKick extends BaseCard {
         addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
 
         // Call the custom QuickKickAction to evaluate stun logic
-        addToBot(new QuickKickAction(p, m, damage));
+        addToBot(new QuickKickAction(p, m, damage, magicNumber));
     }
 
+/*
     @Override
     public void triggerOnGlowCheck() {
         // Retrieve the OutburstPower from the player if it exists
@@ -57,7 +61,7 @@ public class QuickKick extends BaseCard {
             this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
         }
     }
-
+*/
 
     @Override
     public AbstractCard makeCopy() {
@@ -69,6 +73,7 @@ public class QuickKick extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeDamage(UPG_DAMAGE - DAMAGE);
+            upgradeMagicNumber(UPG_OUTBURST);
             initializeDescription();
         }
     }

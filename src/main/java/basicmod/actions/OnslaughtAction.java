@@ -25,7 +25,7 @@ public class OnslaughtAction extends AbstractGameAction {
 
     public void update() {
         if (this.duration == Settings.ACTION_DUR_FAST) {
-            if (target != null && target.currentHealth > 0 && hitCount < 25) { // Check for maximum hits
+            if (target != null && target.currentHealth > 0 && hitCount < 40) { // Check for maximum hits
                 this.addToBot(new DamageAction(target, info, AttackEffect.BLUNT_HEAVY));
                 this.addToBot(new LoseHPAction(AbstractDungeon.player, AbstractDungeon.player, hpLoss));
                 this.addToBot(new OnslaughtAction(target, info, hpLoss, hitCount + 1)); // Increment hitCount

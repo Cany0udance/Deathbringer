@@ -19,13 +19,13 @@ public class Moratorium extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.SKILL,
-            CardRarity.UNCOMMON,
+            CardRarity.RARE,
             CardTarget.SELF,
             3 // Cost
     );
 
-    private static final int BLOCK_GAIN = 70;
-    private static final int UPG_BLOCK_GAIN = 80;
+    private static final int BLOCK_GAIN = 35;
+    private static final int UPG_BLOCK_GAIN = 45;
     private static final int OUTBURST_GAIN = 3;
     private static final int UPG_OUTBURST_GAIN = 4;
 
@@ -52,7 +52,7 @@ public class Moratorium extends BaseCard {
         addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, this.magicNumber), this.magicNumber));
     }
 
-    @Override
+   /* @Override
     public void triggerOnGlowCheck() {
         // Retrieve the OutburstPower from the player if it exists
         AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
@@ -68,6 +68,8 @@ public class Moratorium extends BaseCard {
             this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
         }
     }
+
+    */
 
 
     @Override

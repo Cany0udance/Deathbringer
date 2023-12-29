@@ -10,7 +10,7 @@
     "NAME": "Ominous Note",
     "FLAVOR": "Maybe taking jobs in the Foglands wasn't such a bright idea.",
     "DESCRIPTIONS": [
-      "Whenever a card is played by #y${modID}:Shadow, apply #b2 #yPoison to a random enemy."
+      "Whenever a card is #y${modID}:Shadowplayed, apply #b2 #yPoison to a random enemy."
     ]
   },
   "${modID}:ShatteredCompass": {

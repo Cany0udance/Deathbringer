@@ -23,7 +23,7 @@ public class CleanKill extends BaseCard {
     );
 
     private static final int DAMAGE = 10;
-    private static final int UPG_DAMAGE = 13;
+    private static final int UPG_DAMAGE = 15;
 
     public CleanKill() {
         super(ID, info);

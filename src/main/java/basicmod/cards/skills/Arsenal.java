@@ -10,6 +10,7 @@ import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.DiscardAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -40,6 +41,7 @@ public class Arsenal extends BaseCard implements PostDrawSubscriber {
     private static final int UPG_DRAW = 4;
 
     private boolean triggeredDraw = false;  // Add this flag
+    private int shadowCardsDrawn = 0; // Class member variable
 
     public Arsenal() {
         super(ID, info);
@@ -60,38 +62,26 @@ public class Arsenal extends BaseCard implements PostDrawSubscriber {
     }
 
     @Override
-    public void triggerOnGlowCheck() {
-        // Retrieve the OutburstPower from the player if it exists
-        AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
-
-        // Determine the threshold for the red glow based on whether the card is upgraded
-        int redGlowThreshold = this.upgraded ? 1 : 2;
-
-        if (outburstPower != null && outburstPower.amount >= redGlowThreshold) {
-            // Glow red if playing this card will trigger the Outburst explosion
-            this.glowColor = RED_BORDER_GLOW_COLOR.cpy();
-        } else {
-            // Glow blue otherwise
-            this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
-        }
-    }
-
-
-    @Override
     public void receivePostDraw(AbstractCard c) {
         // Only act if triggeredDraw is true
         if (this.triggeredDraw) {
             ArrayList<String> shadowCardIDs = new ArrayList<>(Arrays.asList(
                     "Deathbringer:Mantle", "Deathbringer:Shroud", "Deathbringer:Protrusion",
-                    "Deathbringer:Eclipse", "Deathbringer:Liability",
+                    "Deathbringer:Liability",
                     "Deathbringer:Injection", "Deathbringer:Admire", "Deathbringer:Expurgate",
                     "Deathbringer:Shadowstep", "Deathbringer:VanishingAct",
                     "Deathbringer:Sanctuary", "Deathbringer:SubconsciousKiller", "Deathbringer:ShadowStrike", "Deathbringer:ShadowDefend", "Deathbringer:ConcealedBlade", "Deathbringer:Intuition"
             ));
             if (shadowCardIDs.contains(c.cardID)) {
-                addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, block));
-                addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new OutburstPower(AbstractDungeon.player, 1), 1));
+                shadowCardsDrawn++; // Increment for each Shadow card drawn
             }
+        }
+    }
+
+    public void triggerArsenalDiscard() {
+        if (shadowCardsDrawn > 0) {
+            addToBot(new DiscardAction(AbstractDungeon.player, AbstractDungeon.player, shadowCardsDrawn, false));
+            shadowCardsDrawn = 0; // Reset the counter after discarding
         }
     }
 

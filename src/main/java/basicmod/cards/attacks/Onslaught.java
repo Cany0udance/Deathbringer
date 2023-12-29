@@ -19,7 +19,7 @@ public class Onslaught extends BaseCard {
             CardType.ATTACK,
             CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            3 // Energy cost
+            2 // Energy cost
     );
 
     private static final int DAMAGE = 18;

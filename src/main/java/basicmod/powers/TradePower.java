@@ -19,26 +19,6 @@ public class TradePower extends BasePower {
 
     public TradePower(final AbstractCreature owner, final int amount) {
         super(POWER_ID, PowerType.BUFF, false, owner, amount);
-
-        // Initialize list of Shadow cards
-        shadowCardList.add(new Mantle());
-        shadowCardList.add(new Shroud());
-        shadowCardList.add(new Protrusion());
-        shadowCardList.add(new Eclipse());
-        shadowCardList.add(new Liability());
-        shadowCardList.add(new Injection());
-        shadowCardList.add(new Admire());
-        shadowCardList.add(new Expurgate());
-        shadowCardList.add(new Shadowstep());
-        shadowCardList.add(new VanishingAct());
-        shadowCardList.add(new Sanctuary());
-        shadowCardList.add(new SubconsciousKiller());
-        shadowCardList.add(new ShadowStrike());
-        shadowCardList.add(new ShadowDefend());
-        shadowCardList.add(new ConcealedBlade());
-        shadowCardList.add(new Slipup());
-        shadowCardList.add(new Intuition());
-
         updateDescription();
     }
 
@@ -47,46 +27,4 @@ public class TradePower extends BasePower {
         description = DESCRIPTIONS[0] + amount + DESCRIPTIONS[1];
     }
 
-    @Override
-    public void atStartOfTurnPostDraw() {
-        AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
-            @Override
-            public void update() {
-                gainBlockForShadowCards();
-                this.isDone = true;
-            }
-        });
-    }
-
-
-    @Override
-    public void atEndOfTurn(boolean isPlayer) {
-        if (isPlayer) {
-            gainBlockForShadowCards();
-        }
-    }
-
-    private void gainBlockForShadowCards() {
-        int blockGain = 0;
-        for (AbstractCard c : AbstractDungeon.player.hand.group) {
-            for (AbstractCard shadowCard : shadowCardList) {
-                if (c.cardID.equals(shadowCard.cardID)) {
-                    blockGain += amount;
-                }
-            }
-        }
-        if (blockGain > 0) {
-            addToBot(new GainBlockAction(owner, blockGain));
-        }
-    }
-
-    @Override
-    public boolean canPlayCard(AbstractCard card) {
-        for (AbstractCard shadowCard : shadowCardList) {
-            if (card.cardID.equals(shadowCard.cardID)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

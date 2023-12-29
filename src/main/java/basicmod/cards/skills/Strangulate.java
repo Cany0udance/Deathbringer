@@ -3,12 +3,17 @@ package basicmod.cards.skills;
 import basicmod.actions.UpgradeStrangulateAction;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
+import basicmod.powers.OutburstPower;
 import basicmod.powers.StranglePower;
 import basicmod.util.CardStats;
+import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+
+import static basicmod.cards.FlavorConstants.FLAVOR_BOX_COLOR;
+import static basicmod.cards.FlavorConstants.FLAVOR_TEXT_COLOR;
 
 public class Strangulate extends BaseCard {
     public static final String ID = makeID("Strangulate");
@@ -20,12 +25,16 @@ public class Strangulate extends BaseCard {
             1
     );
 
-    private static final int STRANGLE_AMT = 3;
-    private static final int UPG_STRANGLE_AMT = 5;
+    private static final int STRANGLE_AMT = 4;
+    private static final int UPG_STRANGLE_AMT = 6;
 
     public Strangulate() {
         super(ID, info);
         baseMagicNumber = magicNumber = STRANGLE_AMT;
+        if (!upgraded) {
+            FlavorText.AbstractCardFlavorFields.boxColor.set(this, FLAVOR_BOX_COLOR);
+            FlavorText.AbstractCardFlavorFields.textColor.set(this, FLAVOR_TEXT_COLOR);
+        }
     }
 
     @Override
@@ -35,6 +44,7 @@ public class Strangulate extends BaseCard {
             upgradeMagicNumber(UPG_STRANGLE_AMT - STRANGLE_AMT);
             this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
             initializeDescription();
+            removeFlavorText();
         }
     }
 
@@ -48,6 +58,16 @@ public class Strangulate extends BaseCard {
                 addToBot(new UpgradeStrangulateAction(this));
             }
         }
+        if (this.upgraded) {
+            addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, 1), 1));
+        }
+    }
+
+    private void removeFlavorText() {
+        // Implement logic to remove or hide the flavor text
+        // For example, set it to an empty string or null
+        FlavorText.AbstractCardFlavorFields.boxColor.set(this, null);
+        FlavorText.AbstractCardFlavorFields.textColor.set(this, null);
     }
     @Override
     public AbstractCard makeCopy() {

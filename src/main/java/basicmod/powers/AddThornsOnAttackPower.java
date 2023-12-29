@@ -36,7 +36,6 @@ public class AddThornsOnAttackPower extends BasePower implements InvisiblePower,
     @Override
     public void atEndOfRound() {
         if (this.attacksThisTurn > 0) {
-            this.flash();
             // Add the total Thorns to the player at the end of the round
             this.addToBot(new ApplyPowerAction(this.owner, this.owner, new ThornsPower(this.owner, this.attacksThisTurn), this.attacksThisTurn));
         }

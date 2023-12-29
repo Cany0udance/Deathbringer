@@ -19,13 +19,13 @@ public class HoldThis extends BaseCard {
             CardType.ATTACK,
             CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            2
+            1
     );
 
     private static final int DAMAGE = 3;
 
-    private static final int BOMB_DAMAGE = 45;
-    private static final int UPG_BOMB_DAMAGE = 55;
+    private static final int BOMB_DAMAGE = 30;
+    private static final int UPG_BOMB_DAMAGE = 40;
 
     public HoldThis() {
         super(ID, info);

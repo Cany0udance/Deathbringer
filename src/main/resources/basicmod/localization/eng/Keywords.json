@@ -9,9 +9,10 @@
   {
     "PROPER_NAME": "Shadowplay",
     "NAMES": [
-      "shadowplay"
+      "shadowplay",
+      "shadowplayed"
     ],
-    "DESCRIPTION": "Activates a special effect when the card is triggered by another Shadow card being played."
+    "DESCRIPTION": "A card is Shadowplayed if its actions are triggered by Shadow."
   },
   {
     "PROPER_NAME": "Progressive",
@@ -61,7 +62,7 @@
     "NAMES": [
       "outburst"
     ],
-    "DESCRIPTION": "When you reach #b5 Outburst, trigger an explosion that deals #b50 damage to EVERYONE. You cannot lose more than #b25 HP per trigger."
+    "DESCRIPTION": "When you reach #b5 or more Outburst, trigger an explosion that deals #b25 damage to ALL enemies, then remove your Outburst."
   },
   {
     "PROPER_NAME": "Due",

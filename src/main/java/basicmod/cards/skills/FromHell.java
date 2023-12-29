@@ -33,6 +33,7 @@ public class FromHell extends BaseCard {
         super(ID, info);
         this.baseMagicNumber = 2; // Represents both Vulnerable and Strength
         this.magicNumber = this.baseMagicNumber;
+        this.exhaust = true;  // Card will be exhausted when played
     }
 
     @Override
@@ -49,34 +50,6 @@ public class FromHell extends BaseCard {
             if (card != thisCard) {
                 addToBot(new ExhaustSpecificCardAction(card, p.hand));
             }
-        }
-
-        // Apply Strength
-        addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, handSize), handSize));
-
-        // Apply Outburst
-        for (int i = 0; i < handSize; ++i) {
-            addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, 1), 1));
-        }
-    }
-
-    @Override
-    public void triggerOnGlowCheck() {
-        // Retrieve the OutburstPower from the player if it exists
-        AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
-
-        // Check the current hand size, subtracting one for this card
-        int handSize = AbstractDungeon.player.hand.size() - 1;
-
-        // Calculate predicted Outburst, based on current hand size and existing Outburst stacks
-        int predictedOutburst = handSize + (outburstPower != null ? outburstPower.amount : 0);
-
-        if (predictedOutburst >= 5) {
-            // Glow red if playing this card will trigger the Outburst explosion
-            this.glowColor = RED_BORDER_GLOW_COLOR.cpy();
-        } else {
-            // Glow blue otherwise
-            this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
         }
     }
 

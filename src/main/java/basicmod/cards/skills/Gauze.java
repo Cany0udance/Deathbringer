@@ -20,11 +20,11 @@ public class Gauze extends BaseCard {
             2 // Initial energy cost
     );
 
-    private static final int BLOCK = 2;
-    private static final int UPG_BLOCK = 3;  // Changed from 1 to 3 to reflect the upgraded amount
-    private static final int HEAL_AMOUNT = 5;  // Amount of HP to be healed
+    private static final int BLOCK = 3;
+    private static final int UPG_BLOCK = 4;  // Changed from 1 to 3 to reflect the upgraded amount
+    private static final int HEAL_AMOUNT = 3;  // Amount of HP to be healed
 
-    private static final int TIMES = 4;  // Number of times to gain Block
+    private static final int TIMES = 3;  // Number of times to gain Block
 
     public Gauze() {
         super(ID, info);

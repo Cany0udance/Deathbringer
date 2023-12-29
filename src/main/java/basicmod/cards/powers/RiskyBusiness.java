@@ -20,11 +20,10 @@ public class RiskyBusiness extends BaseCard {
     );
 
     private static final int DRAW_AMOUNT = 1;
-    private static final int UPG_DRAW_AMOUNT = 2;
 
     public RiskyBusiness() {
         super(ID, info);
-        setMagic(DRAW_AMOUNT, UPG_DRAW_AMOUNT);
+        setMagic(DRAW_AMOUNT);
     }
 
     @Override
@@ -36,8 +35,7 @@ public class RiskyBusiness extends BaseCard {
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeMagicNumber(UPG_DRAW_AMOUNT - DRAW_AMOUNT);
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeBaseCost(0);
             initializeDescription();
         }
     }

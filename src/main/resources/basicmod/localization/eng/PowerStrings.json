@@ -28,19 +28,19 @@
   "${modID}:GainStrangleEqualToPlatedArmor": {
     "NAME": "Reactive Net",
     "DESCRIPTIONS": [
-      "The next time this enemy's Block is broken, they gain #yStrangle equal to their #yPlated #yArmor count."
+      "The next time this enemy's #yBlock is broken, they gain #yStrangle equal to their #yPlated #yArmor count."
     ]
   },
   "${modID}:ConvertPlatedArmorToStrangle": {
     "NAME": "Reactive Net 2.0",
     "DESCRIPTIONS": [
-      "The next time this enemy's Block is broken, convert their #yPlated #yArmor to #yStrangle."
+      "The next time this enemy's #yBlock is broken, convert their #yPlated #yArmor to #yStrangle."
     ]
   },
   "${modID}:Outburst": {
     "NAME": "Outburst",
     "DESCRIPTIONS": [
-      "When you reach #b5 #yOutburst, trigger an explosion that deals #b50 damage to EVERYONE. You cannot lose more than #b25 HP per trigger."
+      "When you reach #b5 or more #yOutburst, trigger an explosion that deals #b25 damage to ALL enemies, then remove your #yOutburst."
     ]
   },
   "${modID}:EscapeArtistPower": {
@@ -73,7 +73,7 @@
   "${modID}:OpeningPower": {
     "NAME": "Opening",
     "DESCRIPTIONS": [
-      "At the start of your turn, if no enemies intend to Attack, gain #b%d #yVigor."
+      "At the start of your turn, if no enemies intend to Attack, gain #b%d #yStrength and #b%d #yVigor."
     ]
   },
   "${modID}:RiskyBusinessPower": {
@@ -106,14 +106,14 @@
   "${modID}:DominatePower": {
     "NAME": "Dominate",
     "DESCRIPTIONS": [
-      "Whenever you apply #yStrangle to an enemy, also apply #b%d Weak and #b%d Vulnerable."
+      "Whenever you apply #yStrangle to an enemy, also apply #b%d #yWeak and #b%d #yVulnerable."
     ]
   },
   "${modID}:TradePower": {
-    "NAME": "Trade",
+    "NAME": "The Pact",
     "DESCRIPTIONS": [
-      "#yShadow cards can no longer be played. At the beginning AND end of your turn, for each #yShadow card in your hand, gain #b",
-      " Block."
+      "Whenever a card is #yShadowplayed, gain #b",
+      " #yBlock."
     ]
   },
   "${modID}:ThresholdPower": {

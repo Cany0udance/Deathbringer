@@ -26,8 +26,6 @@ public class Admire extends BaseCard {
     );
 
     private static final int DAMAGE = 6;
-    private static final int UPG_DAMAGE = -2;
-
     private static final int PLATED_ARMOR = 4;
     private static final int UPG_PLATED_ARMOR = 2;
 
@@ -35,7 +33,7 @@ public class Admire extends BaseCard {
 
     public Admire() {
         super(ID, info);
-        setDamage(DAMAGE, UPG_DAMAGE);
+        setDamage(DAMAGE);
         this.magicNumber = this.baseMagicNumber = PLATED_ARMOR;
     }
 
@@ -125,7 +123,6 @@ public class Admire extends BaseCard {
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE);
             upgradeMagicNumber(UPG_PLATED_ARMOR);
             initializeDescription();
         }

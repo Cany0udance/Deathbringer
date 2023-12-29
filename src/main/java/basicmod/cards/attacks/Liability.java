@@ -10,6 +10,7 @@ import basicmod.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -20,17 +21,17 @@ import com.megacrit.cardcrawl.powers.watcher.EndTurnDeathPower;
 
 import static basicmod.Deathbringer.RED_BORDER_GLOW_COLOR;
 
-public class Liability extends BaseCard implements MaxHPChangeSubscriber {
+public class Liability extends BaseCard {
     public static final String ID = makeID("Liability");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.ATTACK,
-            CardRarity.UNCOMMON,
+            CardRarity.RARE,
             CardTarget.ENEMY,
-            0
+            1
     );
 
-    private static final int DAMAGE = 14;
+    private static final int DAMAGE = 10;
     private static final int MULTIPLIER = 2;
     private static final int UPG_MULTIPLIER = 1;
 
@@ -95,7 +96,7 @@ public class Liability extends BaseCard implements MaxHPChangeSubscriber {
         });
     }
 
-    @Override
+   /* @Override
     public void triggerOnGlowCheck() {
         // Retrieve the OutburstPower from the player if it exists
         AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
@@ -108,32 +109,7 @@ public class Liability extends BaseCard implements MaxHPChangeSubscriber {
             this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
         }
     }
-
-    public void triggerShadowplayEffect() {
-        // Trigger Max HP reduction
-        BaseMod.subscribe(this);
-        BaseMod.publishMaxHPChange(-2);  // Assuming BaseMod has such a publish method
-        BaseMod.unsubscribe(this);
-    }
-
-    @Override
-    public int receiveMaxHPChange(int amount) {
-        AbstractPlayer p = AbstractDungeon.player;
-        p.maxHealth += amount;  // Reduce by 2 Max HP, since amount would be -2
-
-        // Ensure maxHealth doesn't go below 1
-        if (p.maxHealth < 1) {
-            p.maxHealth = 1;
-        }
-
-        // Ensure currentHealth doesn't exceed maxHealth
-        if (p.maxHealth < p.currentHealth) {
-            p.currentHealth = p.maxHealth;
-        }
-
-        return 0; // Assuming that you don't want to change the amount any further
-    }
-
+*/
     @Override
     public void upgrade() {
         if (!upgraded) {

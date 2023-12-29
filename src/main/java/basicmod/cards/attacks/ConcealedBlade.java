@@ -25,7 +25,7 @@ public class ConcealedBlade extends BaseCard {
     );
 
     private static final int DAMAGE = 4;
-    private static final int UPG_DAMAGE = 4;
+    private static final int UPG_DAMAGE = 3;
 
     public ConcealedBlade() {
         super(ID, info);

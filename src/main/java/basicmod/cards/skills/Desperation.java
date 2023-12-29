@@ -20,7 +20,7 @@ public class Desperation extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.SKILL,
-            CardRarity.UNCOMMON,
+            CardRarity.RARE,
             CardTarget.SELF,
             0 // Cost
     );
@@ -51,7 +51,7 @@ public class Desperation extends BaseCard {
             addToBot(new DrawCardAction(p, 1));
         }
     }
-
+/*
     @Override
     public void triggerOnGlowCheck() {
         // Retrieve the OutburstPower from the player if it exists
@@ -65,7 +65,7 @@ public class Desperation extends BaseCard {
             this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
         }
     }
-
+*/
     @Override
     public AbstractCard makeCopy() {
         return new Desperation();

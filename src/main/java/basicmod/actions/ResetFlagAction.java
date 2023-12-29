@@ -13,6 +13,7 @@ public class ResetFlagAction extends AbstractGameAction {
     @Override
     public void update() {
         cardInstance.setTriggeredDraw(false);
+        cardInstance.triggerArsenalDiscard();
         this.isDone = true;
     }
 }

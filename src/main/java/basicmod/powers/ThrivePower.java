@@ -1,3 +1,5 @@
+/*
+
 package basicmod.powers;
 
 import com.megacrit.cardcrawl.actions.common.HealAction;
@@ -29,3 +31,4 @@ public class ThrivePower extends BasePower {
         addToBot(new RemoveSpecificPowerAction(p, p, this));
     }
 }
+*/

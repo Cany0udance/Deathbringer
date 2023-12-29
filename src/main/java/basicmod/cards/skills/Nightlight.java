@@ -25,6 +25,8 @@ public class Nightlight extends BaseCard {
     );
 
     private static final int WEAK_AMOUNT = 1;  // Apply 1 Weak
+
+    private static final int UPG_WEAK_AMOUNT = 1;  // Apply 1 Weak
     private static boolean vfxPlayed = false;
 
     public Nightlight() {
@@ -44,16 +46,13 @@ public class Nightlight extends BaseCard {
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
             addToBot(new ApplyPowerAction(monster, p, new WeakPower(monster, this.magicNumber, false)));
         }
-        if (!upgraded) {
-            addToBot(new ApplyPowerAction(p, p, new WeakPower(p, this.magicNumber, false)));
-        }
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeMagicNumber(UPG_WEAK_AMOUNT);
             initializeDescription();
         }
     }

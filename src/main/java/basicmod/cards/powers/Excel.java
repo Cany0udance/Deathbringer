@@ -21,12 +21,13 @@ public class Excel extends BaseCard {
     );
 
     private static final int MAX_HP_GAIN = 7;
-    private static final int UPG_MAX_HP_GAIN = 3;  // 5+3=8 Max HP when upgraded
+    private static final int UPG_MAX_HP_GAIN = 3;
 
     public Excel() {
         super(ID, info);
         setMagic(MAX_HP_GAIN, UPG_MAX_HP_GAIN);
         this.isInnate = true;
+        this.tags.add(CardTags.HEALING);
     }
 
     @Override

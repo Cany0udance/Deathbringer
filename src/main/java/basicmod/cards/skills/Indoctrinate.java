@@ -24,8 +24,8 @@ public class Indoctrinate extends BaseCard {
             -1 // X-cost
     );
 
-    private static final int STRANGLE_MULTIPLIER = 6;
-    private static final int UPG_STRANGLE_MULTIPLIER = 8;
+    private static final int STRANGLE_MULTIPLIER = 8;
+    private static final int UPG_STRANGLE_MULTIPLIER = 12;
     private static final int STRENGTH_MULTIPLIER = 2;
 
     public Indoctrinate() {

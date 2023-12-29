@@ -6,7 +6,11 @@ import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DiscardAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
+import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.status.VoidCard;
+import com.megacrit.cardcrawl.cards.status.Wound;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -32,6 +36,8 @@ public class Slipup extends BaseCard {
 
         // Add "Shadow" keyword to this card
         this.keywords.add("shadow");
+        this.cardsToPreview = new VoidCard();
+        this.isEthereal = true;
     }
 
     @Override
@@ -45,23 +51,10 @@ public class Slipup extends BaseCard {
         // This card is unplayable, so nothing should happen here
     }
 
-    @Override
-    public void triggerOnGlowCheck() {
-        // Retrieve the OutburstPower from the player if it exists
-        AbstractPower outburstPower = AbstractDungeon.player.getPower("Deathbringer:Outburst");
-
-        if (outburstPower != null && outburstPower.amount >= 2) {
-            // Glow red if playing this card will trigger the Outburst explosion
-            this.glowColor = RED_BORDER_GLOW_COLOR.cpy();
-        } else {
-            // Glow blue otherwise
-            this.glowColor = BLUE_BORDER_GLOW_COLOR.cpy();
-        }
-    }
-
     public void triggerShadowplayEffect() {
         // Discard your hand
-        addToBot(new ApplyPowerAction(player, player, new OutburstPower(player, 3), 3));    }
+        addToBot(new MakeTempCardInDrawPileAction(new VoidCard(), 1, true, true));
+    }
 
     @Override
     public AbstractCard makeCopy() {

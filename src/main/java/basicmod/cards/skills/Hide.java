@@ -4,6 +4,7 @@ import basicmod.actions.UpgradeHideAction;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
+import com.evacipated.cardcrawl.mod.stslib.patches.FlavorText;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -11,6 +12,9 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static basicmod.cards.FlavorConstants.FLAVOR_BOX_COLOR;
+import static basicmod.cards.FlavorConstants.FLAVOR_TEXT_COLOR;
 
 public class Hide extends BaseCard {
     public static final String ID = makeID("Hide");
@@ -28,6 +32,10 @@ public class Hide extends BaseCard {
     public Hide() {
         super(ID, info);
         setBlock(BLOCK_PER_SHADOW, UPG_BLOCK_PER_SHADOW);
+        if (!upgraded) {
+            FlavorText.AbstractCardFlavorFields.boxColor.set(this, FLAVOR_BOX_COLOR);
+            FlavorText.AbstractCardFlavorFields.textColor.set(this, FLAVOR_TEXT_COLOR);
+        }
     }
 
     @Override
@@ -60,7 +68,15 @@ public class Hide extends BaseCard {
             upgradeBlock(UPG_BLOCK_PER_SHADOW - BLOCK_PER_SHADOW);
             this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
             initializeDescription();
+            removeFlavorText();
         }
+    }
+
+    private void removeFlavorText() {
+        // Implement logic to remove or hide the flavor text
+        // For example, set it to an empty string or null
+        FlavorText.AbstractCardFlavorFields.boxColor.set(this, null);
+        FlavorText.AbstractCardFlavorFields.textColor.set(this, null);
     }
 
     @Override

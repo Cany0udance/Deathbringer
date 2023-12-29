@@ -44,27 +44,19 @@ public class Injection extends BaseCard {
     }
 
     public void dealDamageAndApplyPoison(AbstractPlayer p, AbstractMonster m, int dealDamage, int applyPoison) {
-        logger.info("Entering dealDamageAndApplyPoison method");
-        int initialHP = m.currentHealth;
-        logger.info("Initial HP of monster: " + initialHP);
 
+        // Check for Vulnerable power and increase damage if present
         if (m.hasPower("Vulnerable")) {
             dealDamage *= 1.5;
         }
 
-        addToTop(new AbstractGameAction() {
-            @Override
-            public void update() {
-                logger.info("Inside AbstractGameAction update method");
-                if (m.currentHealth < initialHP) {
-                    logger.info("Monster took damage, applying poison");
-                    addToTop(new ApplyPowerAction(m, p, new PoisonPower(m, p, applyPoison), applyPoison));
-                }
-                this.isDone = true;
-            }
-        });
-        addToTop(new DamageAction(m, new DamageInfo(p, dealDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        // Damage action
+        addToBot(new DamageAction(m, new DamageInfo(p, dealDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+
+        // Apply poison action
+        addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, applyPoison), applyPoison));
     }
+
 
     public void triggerFullEffect() {
         logger.info("Triggering Full Effect");

@@ -1,3 +1,5 @@
+/*
+
 package basicmod.cards.powers;
 
 import basicmod.cards.BaseCard;
@@ -19,12 +21,13 @@ public class Thrive extends BaseCard {
             1  // Energy cost
     );
 
-    private static final int HEAL_AMOUNT = 15;
-    private static final int UPG_HEAL_AMOUNT = 20;
+    private static final int HEAL_AMOUNT = 5;
+    private static final int UPG_HEAL_AMOUNT = 8;
 
     public Thrive() {
         super(ID, info);
         setMagic(HEAL_AMOUNT, UPG_HEAL_AMOUNT);
+        this.tags.add(CardTags.HEALING);
     }
 
     @Override
@@ -46,3 +49,5 @@ public class Thrive extends BaseCard {
         return new Thrive();
     }
 }
+
+*/

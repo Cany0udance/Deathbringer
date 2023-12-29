@@ -113,6 +113,7 @@ public class Deathbringer extends CustomPlayer implements CustomSavableRaw {
         retVal.add(Defend.ID);
         retVal.add(Defend.ID);
         retVal.add(Defend.ID);
+        retVal.add(Defend.ID);
         retVal.add(ShadowDefend.ID);
         retVal.add(Pocket.ID);
 

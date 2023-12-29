@@ -1,16 +1,17 @@
 package basicmod.util;
 
-import basicmod.actions.ShroudAction;
 import basicmod.cards.attacks.*;
 import basicmod.cards.skills.*;
 import basicmod.cards.statuses.Slipup;
 import basicmod.effects.ShadowEffect;
+import basicmod.powers.TradePower;
 import basicmod.powers.VeilPower;
 import basicmod.relics.OminousNote;
 import basicmod.relics.RepairedCompass;
 import basicmod.relics.ShatteredCompass;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -97,9 +98,6 @@ public class ShadowUtility {
                         if (randomShadowCard instanceof Admire) {
                             ((Admire) randomShadowCard).triggerFullEffect();
                         }
-                        if (randomShadowCard instanceof Eclipse) {
-                            ((Eclipse) randomShadowCard).triggerFullEffect();
-                        }
                         if (randomShadowCard instanceof Shroud) {
                             ((Shroud) randomShadowCard).triggerFullEffect();
                         }
@@ -163,9 +161,6 @@ public class ShadowUtility {
                     if (randomShadowCard instanceof Admire) {
                         ((Admire) randomShadowCard).triggerHalfEffect();
                     }
-                    if (randomShadowCard instanceof Eclipse) {
-                        ((Eclipse) randomShadowCard).triggerHalfEffect();
-                    }
                     if (randomShadowCard instanceof Shroud) {
                         ((Shroud) randomShadowCard).triggerHalfEffect();
                     }
@@ -215,6 +210,12 @@ public class ShadowUtility {
                 if (AbstractDungeon.player.hasRelic(OminousNote.ID)) {
                     applyOminousNoteEffect();
                 }
+
+                if (AbstractDungeon.player.hasPower(TradePower.POWER_ID)) {
+                    TradePower tradePower = (TradePower) AbstractDungeon.player.getPower(TradePower.POWER_ID);
+                    int tradePowerAmount = tradePower.amount; // Now you have the correct amount
+                    AbstractDungeon.actionManager.addToBottom(new GainBlockAction(p, p, tradePowerAmount));
+                }
             }
         }
     }
@@ -248,17 +249,11 @@ public class ShadowUtility {
         if (card instanceof VanishingAct) {
             ((VanishingAct) card).triggerShadowplayEffect();
         }
-        if (card instanceof Eclipse) {
-            ((Eclipse) card).triggerShadowplayEffect();
-        }
         if (card instanceof Slipup) {
             ((Slipup) card).triggerShadowplayEffect();
         }
         if (card instanceof Sanctuary) {
             ((Sanctuary) card).triggerShadowplayEffect();
-        }
-        if (card instanceof Liability) {
-            ((Liability) card).triggerShadowplayEffect();
         }
         if (card instanceof ShadowStrike) {
             ((ShadowStrike) card).triggerShadowplayEffect();
@@ -268,6 +263,9 @@ public class ShadowUtility {
         }
         if (card instanceof ConcealedBlade) {
             ((ConcealedBlade) card).triggerShadowplayEffect();
+        }
+        if (card instanceof Shroud) {
+            ((Shroud) card).triggerShadowplayEffect();
         }
         if (!firstShadowplayTriggered) {
             AbstractPlayer p = AbstractDungeon.player;
@@ -294,17 +292,11 @@ public class ShadowUtility {
                 if (card instanceof VanishingAct) {
                     ((VanishingAct) card).triggerShadowplayEffect();
                 }
-                if (card instanceof Eclipse) {
-                    ((Eclipse) card).triggerShadowplayEffect();
-                }
                 if (card instanceof Slipup) {
                     ((Slipup) card).triggerShadowplayEffect();
                 }
                 if (card instanceof Sanctuary) {
                     ((Sanctuary) card).triggerShadowplayEffect();
-                }
-                if (card instanceof Liability) {
-                    ((Liability) card).triggerShadowplayEffect();
                 }
                 if (card instanceof ShadowStrike) {
                     ((ShadowStrike) card).triggerShadowplayEffect();
@@ -314,6 +306,9 @@ public class ShadowUtility {
                 }
                 if (card instanceof ConcealedBlade) {
                     ((ConcealedBlade) card).triggerShadowplayEffect();
+                }
+                if (card instanceof Shroud) {
+                    ((Shroud) card).triggerShadowplayEffect();
                 }
             }
             firstShadowplayTriggered = true;

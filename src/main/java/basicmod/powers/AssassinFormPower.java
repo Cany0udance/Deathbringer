@@ -20,8 +20,8 @@ public class AssassinFormPower extends BasePower {
     // A list containing the IDs of all cards with a triggerShadowplayEffect method
     public static final List<String> AssassinFormShadowplayCards = Arrays.asList(
             "Deathbringer:Protrusion", "Deathbringer:Mantle", "Deathbringer:SubconsciousKiller",
-            "Deathbringer:Injection", "Deathbringer:VanishingAct", "Deathbringer:Eclipse",
-            "Deathbringer:Slipup", "Deathbringer:Sanctuary", "Deathbringer:Liability", "Deathbringer:ShadowStrike", "Deathbringer:ShadowDefend", "Deathbringer:ConcealedBlade"
+            "Deathbringer:Injection", "Deathbringer:VanishingAct",
+            "Deathbringer:Slipup", "Deathbringer:Sanctuary", "Deathbringer:ShadowStrike", "Deathbringer:ShadowDefend", "Deathbringer:ConcealedBlade", "Deathbringer:Shroud"
     );
 
     public AssassinFormPower(AbstractCreature owner) {

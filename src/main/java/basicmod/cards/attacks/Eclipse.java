@@ -23,8 +23,8 @@ public class Eclipse extends BaseCard {
             2
     );
 
-    private static final int DAMAGE = 8;
-    private static final int UPG_DAMAGE = 3;
+    private static final int DAMAGE = 16;
+    private static final int UPG_DAMAGE = 6;
 
     public Eclipse() {
         super(ID, info);
@@ -34,10 +34,9 @@ public class Eclipse extends BaseCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        ShadowUtility.triggerGeneralShadowEffect(this);
     }
 
-    public void triggerShadowplayEffect() {
+    public void triggerOnManualDiscard() {
         addToBot(new AbstractGameAction() {
             @Override
             public void update() {
@@ -65,42 +64,13 @@ public class Eclipse extends BaseCard {
         });
     }
 
-    public void triggerFullEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractMonster m = AbstractDungeon.getRandomMonster();
-                if (m != null) {
-                    int calculatedDamage = damage;
-                    if (m.hasPower("Vulnerable")) {
-                        calculatedDamage *= 1.5;
-                    }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-                }
-                this.isDone = true;
-            }
-        });
-    }
-
-    public void triggerHalfEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractMonster m = AbstractDungeon.getRandomMonster();
-                if (m != null) {
-                    int calculatedDamage = damage / 2;
-                    if (m.hasPower("Vulnerable")) {
-                        calculatedDamage *= 1.5;
-                    }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-                }
-                this.isDone = true;
-            }
-        });
+    @Override
+    public void upgrade() {
+        if (!upgraded) {
+            upgradeName();
+            upgradeDamage(UPG_DAMAGE);
+            initializeDescription();
+        }
     }
 
     @Override

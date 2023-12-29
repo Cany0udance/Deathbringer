@@ -14,14 +14,14 @@ public class Trade extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.POWER,
-            CardRarity.RARE,
+            CardRarity.UNCOMMON,
             CardTarget.SELF,
-            2  // Energy cost
+            1  // Energy cost
     );
 
     public Trade() {
         super(ID, info);
-        this.magicNumber = baseMagicNumber = 5;
+        this.magicNumber = baseMagicNumber = 3;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Trade extends BaseCard {
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeMagicNumber(2);
+            upgradeMagicNumber(1);
             initializeDescription();
         }
     }

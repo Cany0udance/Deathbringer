@@ -21,7 +21,7 @@ public class Threshold extends BaseCard {
 
     public Threshold() {
         super(ID, info);
-        this.baseMagicNumber = 100;  // Additional damage to Outburst
+        this.baseMagicNumber = 50;  // Additional damage to Outburst
         this.magicNumber = this.baseMagicNumber;
     }
 
@@ -34,7 +34,7 @@ public class Threshold extends BaseCard {
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeMagicNumber(75);  // Increase the additional damage to 175 when upgraded
+            upgradeMagicNumber(25);  // Increase the additional damage to 175 when upgraded
             initializeDescription();
         }
     }
