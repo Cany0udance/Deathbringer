@@ -33,25 +33,34 @@ public class UnknownDepths extends BaseCard {
         ArrayList<AbstractCard> shadowCardList = new ArrayList<>();
 
         // Manually add cards to the list
-        shadowCardList.add(new Mantle());
-        shadowCardList.add(new Shroud());
-        shadowCardList.add(new Protrusion());
-        shadowCardList.add(new Liability());
-        shadowCardList.add(new Injection());
         shadowCardList.add(new Admire());
-        shadowCardList.add(new Expurgate());
-        shadowCardList.add(new Shadowstep());
-        shadowCardList.add(new VanishingAct());
-        shadowCardList.add(new Sanctuary());
-        shadowCardList.add(new SubconsciousKiller());
+        shadowCardList.add(new Breach());
         shadowCardList.add(new ConcealedBlade());
-        shadowCardList.add(new Intuition());
+        shadowCardList.add(new FinishTheJob());
+        shadowCardList.add(new Injection());
+        shadowCardList.add(new Killswitch());
+        shadowCardList.add(new LightsOut());
+        shadowCardList.add(new Lookout());
+        shadowCardList.add(new Malison());
+        shadowCardList.add(new Mantle());
+        shadowCardList.add(new Nightlight());
+        shadowCardList.add(new NothingPersonal());
+        shadowCardList.add(new Protrusion());
+        shadowCardList.add(new Quench());
+        shadowCardList.add(new Sanctuary());
+        shadowCardList.add(new Seethe());
+        shadowCardList.add(new Shadowstep());
+        shadowCardList.add(new ShadowStrike());
+        shadowCardList.add(new Shroud());
+        shadowCardList.add(new Skulker());
+        shadowCardList.add(new SubconsciousKiller());
+        shadowCardList.add(new VanishingAct());
 
 
         AbstractCard randomCard = shadowCardList.get(AbstractDungeon.cardRandomRng.random(0, shadowCardList.size() - 1)).makeCopy();
 
         // Set cost to 0 if the card is not SubconsciousKiller or Sanctuary
-        if (!randomCard.cardID.equals("SubconsciousKiller") && !randomCard.cardID.equals("Sanctuary")) {
+        if (!randomCard.cardID.equals(SubconsciousKiller.ID) && !randomCard.cardID.equals(Sanctuary.ID) && !randomCard.cardID.equals(LightsOut.ID)) {
             randomCard.setCostForTurn(0);
         }
 

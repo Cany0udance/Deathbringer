@@ -15,34 +15,37 @@ public class Disengage extends BaseCard {
             CardType.SKILL,
             CardRarity.UNCOMMON,
             CardTarget.SELF,
-            0 // Cost
+            0  // Energy cost
     );
 
     private static final int BASE_BLOCK = 4;
-    private static final int ADDITIONAL_BLOCK = 2;
-    private static final int UPG_ADDITIONAL_BLOCK = 5;
+    private static final int UPGRADE_PLUS_BLOCK = 2;  // Increase block by 2 when upgraded
 
     public Disengage() {
         super(ID, info);
-        setBlock(BASE_BLOCK);
-        this.baseMagicNumber = this.magicNumber = ADDITIONAL_BLOCK;
+        this.baseBlock = BASE_BLOCK;
+    }
+
+    @Override
+    public void use(AbstractPlayer p, AbstractMonster m) {
+        // Always gain block once
+        addToBot(new GainBlockAction(p, p, this.baseBlock));
+
+        // Repeat for each Penumbra (or Umbra if upgraded) card in hand
+        for (AbstractCard c : p.hand.group) {
+            if (c.tags.contains(Deathbringer.Enums.PENUMBRA) || (upgraded && c.tags.contains(Deathbringer.Enums.UMBRA))) {
+                addToBot(new GainBlockAction(p, p, this.baseBlock));
+            }
+        }
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            this.upgradeMagicNumber(UPG_ADDITIONAL_BLOCK - ADDITIONAL_BLOCK);
+            upgradeBlock(UPGRADE_PLUS_BLOCK);
+            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
             initializeDescription();
-        }
-    }
-
-    @Override
-    public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new GainBlockAction(p, p, this.block));
-
-        if (p.hasPower("Deathbringer:Outburst")) {
-            addToBot(new GainBlockAction(p, p, this.magicNumber));
         }
     }
 

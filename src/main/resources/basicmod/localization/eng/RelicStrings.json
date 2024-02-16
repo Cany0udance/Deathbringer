@@ -17,28 +17,56 @@
     "NAME": "Shattered Compass",
     "FLAVOR": "This magical compass guides you to your next target...or so it used to, anyway.",
     "DESCRIPTIONS": [
-      "The first card played by #y${modID}:Shadow each combat is played at full effect."
+      "The first time each combat a #y${modID}:Shadow card wouldn't #y${modID}:Shadowplay a card, it #y${modID}:Shadowplays itself."
     ]
   },
   "${modID}:RepairedCompass": {
     "NAME": "Repaired Compass",
     "FLAVOR": "Much better.",
     "DESCRIPTIONS": [
-      "Replaces [#811414]Shattered[] [#811414]Compass[]. The first card played by #y${modID}:Shadow each turn is played at full effect."
+      "Replaces [#811414]Shattered[] [#811414]Compass[]. Whenever a #y${modID}:Shadow card wouldn't #y${modID}:Shadowplay a card, it #y${modID}:Shadowplays itself."
     ]
   },
-  "${modID}:ArchitectsNail": {
-    "NAME": "Architect's Nail",
-    "FLAVOR": "\"It seems to react dynamically to external forces. Don't touch it!\" - Ranwid",
+  "${modID}:SecretIngredient": {
+    "NAME": "Secret Ingredient",
+    "FLAVOR": "Don't let them cook.",
     "DESCRIPTIONS": [
-      "At the start of your turn, gain #yThorns equal to the number of times you were attacked last turn."
+      "Start each combat with #b2 #y${modID}:Virulence."
     ]
   },
-  "${modID}:MarbleSandal": {
-    "NAME": "Marble Sandal",
-    "FLAVOR": "\"Why are they still here?\"",
+  "${modID}:TornCloth": {
+    "NAME": "Torn Cloth",
+    "FLAVOR": "Spooky!",
     "DESCRIPTIONS": [
-      "At the start of multi-enemy combats, apply #b3 #y${modID}:Due to a random enemy."
+      "The first time each combat a #y${modID}:Penumbra card is #y${modID}:Shadowplayed, gain #b1 #yIntangible."
+    ]
+  },
+  "${modID}:TheBlob": {
+    "NAME": "The Blob",
+    "FLAVOR": "It's alive!",
+    "DESCRIPTIONS": [
+      "At the end of your turn, if you have #yPoison, double EVERYONE'S #yPoison."
+    ]
+  },
+  "${modID}:SneckoTooth": {
+    "NAME": "Snecko Tooth",
+    "FLAVOR": "A tooth of a fallen Snecko. Much smaller than you imagined.",
+    "DESCRIPTIONS": [
+      "Whenever an Attack deals unblocked damage, apply 1 #yPoison."
+    ]
+  },
+  "${modID}:AssassinsTie": {
+    "NAME": "Assassin's Tie",
+    "FLAVOR": "The tie of a legendary assassin born 47,000 years before you.",
+    "DESCRIPTIONS": [
+      "During Boss and Elite combats, draw an additional card at the start of your turn."
+    ]
+  },
+  "${modID}:BadApple": {
+    "NAME": "Bad Apple",
+    "FLAVOR": "Fortunately, you happen to thrive in the presence of despair. Yum!",
+    "DESCRIPTIONS": [
+      "The first two times you gain #yPoison each turn, draw a card."
     ]
   }
 }

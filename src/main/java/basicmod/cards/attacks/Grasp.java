@@ -2,7 +2,6 @@ package basicmod.cards.attacks;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
-import basicmod.powers.StranglePower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -11,6 +10,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.PoisonPower;
 
 public class Grasp extends BaseCard {
     public static final String ID = makeID("Grasp");
@@ -25,13 +25,13 @@ public class Grasp extends BaseCard {
     private static final int DAMAGE = 9;
     private static final int UPG_DAMAGE = 12;
 
-    private static final int STRANGLE = 3;
-    private static final int UPG_STRANGLE = 4; // New constant for upgraded Strangle
+    private static final int POISON = 3;
+    private static final int UPG_POISON = 4; // New constant for upgraded Strangle
 
     public Grasp() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
-        this.magicNumber = this.baseMagicNumber = STRANGLE;  // Set the magic number
+        this.magicNumber = this.baseMagicNumber = POISON;  // Set the magic number
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Grasp extends BaseCard {
             public void update() {
                 float currentHealthPercent = ((float) m.currentHealth / m.maxHealth) * 100;
                 if (currentHealthPercent <= 50) {
-                    addToBot(new ApplyPowerAction(m, p, new StranglePower(m, magicNumber), magicNumber));  // Use the magic number
+                    addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, magicNumber), magicNumber));  // Use the magic number
                 }
                 this.isDone = true;
             }
@@ -59,7 +59,7 @@ public class Grasp extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeDamage(UPG_DAMAGE - DAMAGE);
-            upgradeMagicNumber(UPG_STRANGLE - STRANGLE);  // Upgrade the magic number
+            upgradeMagicNumber(UPG_POISON - POISON);  // Upgrade the magic number
             initializeDescription();
         }
     }

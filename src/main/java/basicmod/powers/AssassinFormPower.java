@@ -1,11 +1,12 @@
 package basicmod.powers;
 
 import basicmod.actions.AssassinFormAction;
-import com.megacrit.cardcrawl.cards.AbstractCard;
-import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import basicmod.cards.attacks.ConcealedBlade;
+import basicmod.cards.attacks.Injection;
+import basicmod.cards.attacks.ShadowStrike;
+import basicmod.cards.skills.*;
+import basicmod.cards.statuses.Slipup;
 import com.megacrit.cardcrawl.core.AbstractCreature;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import basicmod.util.ShadowUtility;
 import static basemod.BaseMod.logger;
 
 import java.util.Arrays;
@@ -18,11 +19,6 @@ public class AssassinFormPower extends BasePower {
     private boolean flashPower;
 
     // A list containing the IDs of all cards with a triggerShadowplayEffect method
-    public static final List<String> AssassinFormShadowplayCards = Arrays.asList(
-            "Deathbringer:Protrusion", "Deathbringer:Mantle", "Deathbringer:SubconsciousKiller",
-            "Deathbringer:Injection", "Deathbringer:VanishingAct",
-            "Deathbringer:Slipup", "Deathbringer:Sanctuary", "Deathbringer:ShadowStrike", "Deathbringer:ShadowDefend", "Deathbringer:ConcealedBlade", "Deathbringer:Shroud"
-    );
 
     public AssassinFormPower(AbstractCreature owner) {
         super(POWER_ID, PowerType.BUFF, false, owner, 1);
@@ -47,8 +43,6 @@ public class AssassinFormPower extends BasePower {
     @Override
     public void atStartOfTurnPostDraw() {
         flashPower = false; // Reset the flash indicator before the turn starts
-        logger.info("Entered atStartOfTurnPostDraw.");
-        logger.info("Stacks: " + this.amount);
         addToBot(new AssassinFormAction(this.amount, this)); // Pass `this` to be able to update `flashPower`
     }
 

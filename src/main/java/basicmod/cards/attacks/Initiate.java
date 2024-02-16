@@ -2,58 +2,54 @@ package basicmod.cards.attacks;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
-import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
-import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DiscardAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.NextTurnBlockPower;
 
 public class Initiate extends BaseCard {
     public static final String ID = makeID("Initiate");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.ATTACK,
-            CardRarity.COMMON,
+            CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            1 // Energy cost
+            1  // Energy cost
     );
 
-    private static final int DAMAGE = 8;
-    private static final int UPG_DAMAGE = 11; // New constant for upgraded damage
-    private static final int MULTIPLIER = 2; // Double damage
-    private static final int UPG_MULTIPLIER = 3; // Triple damage when
-    private static final int OUTBURST = 3;
-    private static final int UPG_OUTBURST = 1; // Upgrade amount
+    private static final int DAMAGE = 10;
+    private static final int UPGRADE_PLUS_DMG = 3;
+    private static final int DRAW = 2;
+    private static final int UPGRADE_PLUS_DRAW = 1;
 
     public Initiate() {
         super(ID, info);
-        setDamage(DAMAGE);
-        setMagic(OUTBURST, UPG_OUTBURST);
+        this.baseDamage = DAMAGE;
+        this.baseMagicNumber = this.magicNumber = DRAW;
+        this.isInnate = true;
+        this.exhaust = true;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-      //  int finalDamage = this.damage;
-
-        if (m.currentHealth == m.maxHealth) {
-         //   finalDamage *= upgraded ? UPG_MULTIPLIER : MULTIPLIER;
-            addToBot(new ApplyPowerAction(p, p, new OutburstPower(p, magicNumber)));
-        }
-
-        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
+        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
+        addToBot(new DrawCardAction(this.magicNumber));
+        AbstractDungeon.actionManager.addToBottom(new WaitAction(0.4f));
+        addToBot(new DiscardAction(p, p, 1, true));
     }
 
     @Override
     public void upgrade() {
-        if (!this.upgraded) {
-            this.upgradeName();
-            this.upgradeDamage(UPG_DAMAGE - DAMAGE); // Update the damage when upgraded
-            upgradeMagicNumber(UPG_OUTBURST);
+        if (!upgraded) {
+            upgradeName();
+            upgradeDamage(UPGRADE_PLUS_DMG);
+            upgradeMagicNumber(UPGRADE_PLUS_DRAW);
             initializeDescription();
         }
     }

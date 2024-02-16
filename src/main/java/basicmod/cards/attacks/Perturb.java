@@ -18,16 +18,16 @@ public class Perturb extends BaseCard {
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.ATTACK,
-            CardRarity.COMMON,
+            CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            1
+            2
     );
 
-    private static final int DAMAGE = 8;
-    private static final int UPG_DAMAGE = 10;
+    private static final int DAMAGE = 16;
+    private static final int UPG_DAMAGE = 24;
 
-    private static final int WEAK = 1;
-    private static final int UPG_WEAK = 2;
+    private static final int WEAK = 5;
+    private static final int UPG_WEAK = 99;
 
     public Perturb() {
         super(ID, info);
@@ -35,6 +35,7 @@ public class Perturb extends BaseCard {
 
         this.baseMagicNumber = WEAK;
         this.magicNumber = this.baseMagicNumber;
+        this.exhaust = true;
     }
 
     @Override

@@ -2,22 +2,12 @@ package basicmod.cards.statuses;
 
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
-import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DiscardAction;
-import com.megacrit.cardcrawl.actions.common.MakeTempCardInDiscardAction;
 import com.megacrit.cardcrawl.actions.common.MakeTempCardInDrawPileAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.status.VoidCard;
-import com.megacrit.cardcrawl.cards.status.Wound;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
-
-import static basicmod.Deathbringer.RED_BORDER_GLOW_COLOR;
-import static com.megacrit.cardcrawl.dungeons.AbstractDungeon.player;
 
 public class Slipup extends BaseCard {
     public static final String ID = makeID("Slipup");
@@ -34,10 +24,11 @@ public class Slipup extends BaseCard {
 
         initializeDescription();
 
-        // Add "Shadow" keyword to this card
-        this.keywords.add("shadow");
+        this.tags.add(Deathbringer.Enums.SHADOW);
         this.cardsToPreview = new VoidCard();
         this.isEthereal = true;
+        setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override

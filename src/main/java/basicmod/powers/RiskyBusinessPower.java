@@ -3,6 +3,7 @@ package basicmod.powers;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.powers.PoisonPower;
 
 import static basicmod.Deathbringer.makeID;
 
@@ -22,7 +23,7 @@ public class RiskyBusinessPower extends BasePower {
 
     @Override
     public void onApplyPower(AbstractPower power, AbstractCreature target, AbstractCreature source) {
-        if (power.ID.equals("Deathbringer:Outburst") && target.isPlayer) {
+        if (power.ID.equals(PoisonPower.POWER_ID) && target.isPlayer) {
             addToBot(new DrawCardAction(this.amount));
         }
     }

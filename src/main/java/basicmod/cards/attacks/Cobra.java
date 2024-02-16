@@ -6,13 +6,10 @@ import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
-import com.megacrit.cardcrawl.actions.common.RemoveSpecificPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.PoisonPower;
 
 public class Cobra extends BaseCard {
@@ -22,56 +19,54 @@ public class Cobra extends BaseCard {
             CardType.ATTACK,
             CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            1 // Energy cost
+            1  // Energy cost
     );
 
     private static final int DAMAGE = 8;
-    private static final int UPG_DAMAGE = 2;
-
-    private static final int MULTIPLIER = 3;
-    private static final int UPG_MULTIPLIER = 1;
+    private static final int UPGRADE_PLUS_DAMAGE = 5;  // Upgrade to 13 damage
 
     public Cobra() {
         super(ID, info);
-        setDamage(DAMAGE, UPG_DAMAGE);
-        setMagic(MULTIPLIER, UPG_MULTIPLIER);
+        this.baseDamage = DAMAGE;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-        int strangleStacks = 0;
-
-        // Check if the monster has Strangle power
-        AbstractPower stranglePower = m.getPower("Deathbringer:Strangle"); // Replace with the actual ID of your Strangle power
-
-        if (stranglePower != null) {
-            strangleStacks = stranglePower.amount;
-
-            // Remove all stacks of Strangle
-            addToBot(new RemoveSpecificPowerAction(m, p, "Deathbringer:Strangle")); // Replace with the actual ID of your Strangle power
-
-            // Apply Poison with quadruple or quintuple stacks
-            int poisonStacks = strangleStacks * magicNumber;
-            addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, poisonStacks), poisonStacks));
+        addToBot(new DamageAction(m, new DamageInfo(p, damage, damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        if (basicmod.Deathbringer.shadowplaysThisCombat > 0) {
+            addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, basicmod.Deathbringer.shadowplaysThisCombat), basicmod.Deathbringer.shadowplaysThisCombat));
         }
-
-        this.exhaust = true;
+        // Reset the description back to the original after use
+        this.rawDescription = cardStrings.DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override
-    public AbstractCard makeCopy() {
-        return new Cobra();
+    public void applyPowers() {
+        super.applyPowers();
+        // Update the description dynamically to reflect the number of Shadowplays
+        this.rawDescription = cardStrings.DESCRIPTION + cardStrings.EXTENDED_DESCRIPTION[0] + basicmod.Deathbringer.shadowplaysThisCombat + (basicmod.Deathbringer.shadowplaysThisCombat == 1 ? cardStrings.EXTENDED_DESCRIPTION[1] : cardStrings.EXTENDED_DESCRIPTION[2]);
+        this.initializeDescription();
+    }
+
+    @Override
+    public void onMoveToDiscard() {
+        // Reset the description when the card is moved to discard
+        this.rawDescription = cardStrings.DESCRIPTION;
+        this.initializeDescription();
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE);
-            upgradeMagicNumber(UPG_MULTIPLIER);
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeDamage(UPGRADE_PLUS_DAMAGE);
             initializeDescription();
         }
+    }
+
+    @Override
+    public AbstractCard makeCopy() {
+        return new Cobra();
     }
 }

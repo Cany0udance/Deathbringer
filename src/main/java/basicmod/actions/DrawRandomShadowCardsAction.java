@@ -1,5 +1,6 @@
 package basicmod.actions;
 
+import basicmod.character.Deathbringer;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
@@ -15,10 +16,6 @@ import static basemod.BaseMod.logger;
 public class DrawRandomShadowCardsAction extends AbstractGameAction {
     private int numCardsToDraw;
 
-    private static final List<String> EXCEPTION_CARD_IDS = Arrays.asList(
-            "Deathbringer:Imprudence", "Deathbringer:Hide", "Deathbringer:UnknownDepths", "Deathbringer:Trade", "Deathbringer:Arsenal" // Replace with the actual ID strings
-    );
-
     public DrawRandomShadowCardsAction(AbstractCreature source, int numCardsToDraw) {
         this.source = source;
         this.numCardsToDraw = numCardsToDraw;
@@ -31,7 +28,7 @@ public class DrawRandomShadowCardsAction extends AbstractGameAction {
 
         // Iterate through draw pile to find all shadow cards
         for (AbstractCard c : originalDrawPile) {
-            if (c.keywords.contains("deathbringer:shadow") && !EXCEPTION_CARD_IDS.contains(c.cardID)) {
+            if (c.tags.contains(Deathbringer.Enums.SHADOW)) {
                 shadowCards.add(c);
                 AbstractDungeon.player.drawPile.removeCard(c);
             }

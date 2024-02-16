@@ -29,6 +29,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.cutscenes.CutscenePanel;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -41,6 +42,7 @@ import static basemod.BaseMod.logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static basicmod.Deathbringer.characterPath;
@@ -53,7 +55,7 @@ public class Deathbringer extends CustomPlayer implements CustomSavableRaw {
 
 
     public static final int ENERGY_PER_TURN = 3;
-    public static final int MAX_HP = 72;
+    public static final int MAX_HP = 78;
     public static final int STARTING_GOLD = 99;
     public static final int CARD_DRAW = 5;
     public static final int ORB_SLOTS = 0;
@@ -74,6 +76,14 @@ public class Deathbringer extends CustomPlayer implements CustomSavableRaw {
         public static AbstractCard.CardColor CARD_COLOR;
         @SpireEnum(name = "DEATHBRINGER")
         public static CardLibrary.LibraryType LIBRARY_COLOR;
+        @SpireEnum
+        public static AbstractCard.CardTags SHADOW;
+        @SpireEnum
+        public static AbstractCard.CardTags SHADOWPLAY;
+        @SpireEnum
+        public static AbstractCard.CardTags UMBRA;
+        @SpireEnum
+        public static AbstractCard.CardTags PENUMBRA;
     }
 
     public Deathbringer() {
@@ -140,7 +150,7 @@ public class Deathbringer extends CustomPlayer implements CustomSavableRaw {
 
     @Override
     public int getAscensionMaxHPLoss() {
-        return 6; //Max hp reduction at ascension 14+
+        return 8; //Max hp reduction at ascension 14+
     }
 
     @Override
@@ -177,6 +187,15 @@ public class Deathbringer extends CustomPlayer implements CustomSavableRaw {
         //energyNumFontRed, Blue, Green, and Purple are used by the basegame characters.
         //It is possible to make your own, but not convenient.
         return FontHelper.energyNumFontRed;
+    }
+
+    @Override
+    public List<CutscenePanel> getCutscenePanels() {
+        List<CutscenePanel> panels = new ArrayList<>();
+        panels.add(new CutscenePanel("basicmod/images/ending/ending1.png", "BLOOD_SPLAT"));
+        panels.add(new CutscenePanel("basicmod/images/ending/ending2real.png", "combat/weightyImpact"));
+        panels.add(new CutscenePanel("basicmod/images/ending/ending3.png", "STANCE_ENTER_CALM"));
+        return panels;
     }
 
     @Override

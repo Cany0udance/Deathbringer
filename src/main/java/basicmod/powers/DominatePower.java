@@ -3,6 +3,7 @@ package basicmod.powers;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.powers.AbstractPower;
+import com.megacrit.cardcrawl.powers.PoisonPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 import static basemod.BaseMod.logger;
@@ -20,7 +21,6 @@ public class DominatePower extends BasePower {
     @Override
     public void updateDescription() {
         description = String.format(DESCRIPTIONS[0], amount, amount);
-        // "Whenever you apply Strangle to an enemy, also apply " + amount + " Weak and " + amount + " Vulnerable."
     }
 
     @Override
@@ -32,7 +32,7 @@ public class DominatePower extends BasePower {
     @Override
     public void onApplyPower(AbstractPower power, AbstractCreature target, AbstractCreature source) {
 
-        if (power.ID.equals(makeID("Strangle")) && source == owner) {
+        if (power.ID.equals(PoisonPower.POWER_ID) && source == owner) {
             addToBot(new ApplyPowerAction(target, owner, new WeakPower(target, amount, false), amount));
             addToBot(new ApplyPowerAction(target, owner, new VulnerablePower(target, amount, false), amount));
         }

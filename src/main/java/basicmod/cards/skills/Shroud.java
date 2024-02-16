@@ -1,5 +1,6 @@
 package basicmod.cards.skills;
 
+import basemod.helpers.TooltipInfo;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
@@ -17,6 +18,9 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.vfx.combat.CleaveEffect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Shroud extends BaseCard {
     public static final String ID = makeID("Shroud");
     private static final CardStats info = new CardStats(
@@ -32,6 +36,7 @@ public class Shroud extends BaseCard {
 
     private static final int SHROUDDAMALL = 4;
     private static final int UPG_SHROUDDAMALL = 2;
+    private List<TooltipInfo> customTooltips = null;
 
     public Shroud() {
         super(ID, info);
@@ -39,6 +44,10 @@ public class Shroud extends BaseCard {
 
         this.baseMagicNumber = SHROUDDAMALL;
         this.magicNumber = this.baseMagicNumber;
+        this.tags.add(Deathbringer.Enums.SHADOW);
+        this.tags.add(Deathbringer.Enums.SHADOWPLAY);
+        setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
     }
 
 
@@ -46,11 +55,6 @@ public class Shroud extends BaseCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new GainBlockAction(p, p, block));
         ShadowUtility.triggerGeneralShadowEffect(this);
-    }
-
-    public void triggerFullEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-        addToBot(new GainBlockAction(p, p, block));
     }
 
     public void triggerHalfEffect() {
@@ -67,6 +71,16 @@ public class Shroud extends BaseCard {
             this.addToBot(new VFXAction(p, new CleaveEffect(), 0.2F));
         }
         this.addToBot(new DamageAllEnemiesAction(p, DamageInfo.createDamageMatrix(magicNumber, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.NONE, true));
+    }
+
+    @Override
+    public List<TooltipInfo> getCustomTooltips() {
+        if (this.customTooltips == null) {
+            this.customTooltips = new ArrayList<>();
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            this.customTooltips.add(shadowTooltip);
+        }
+        return this.customTooltips;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package basicmod.cards.skills;
 
+import basemod.helpers.TooltipInfo;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
@@ -10,7 +11,9 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import static basemod.BaseMod.logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shadowstep extends BaseCard {
     public static final String ID = makeID("Shadowstep");
@@ -25,18 +28,18 @@ public class Shadowstep extends BaseCard {
     private static final int BLOCK = 5;
     private static final int UPG_BLOCK = 3;
     private static final int DRAW = 2;
+    private List<TooltipInfo> customTooltips = null;
 
     public Shadowstep() {
         super(ID, info);
         setBlock(BLOCK, UPG_BLOCK);
-
-        // Add "Shadow" keyword to this card
-        this.keywords.add("shadow");
+        this.tags.add(Deathbringer.Enums.SHADOW);
+        setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        logger.info("Using Shadowstep.");
         // Gain block
         addToBot(new GainBlockAction(p, p, block));
 
@@ -48,16 +51,20 @@ public class Shadowstep extends BaseCard {
 
     }
 
-    public void triggerFullEffect() {
-        // Halve the effectiveness of this card when it's a Shadow card
-        addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, block));
-        addToBot(new DrawCardAction(AbstractDungeon.player, DRAW ));
-    }
-
     public void triggerHalfEffect() {
         // Halve the effectiveness of this card when it's a Shadow card
         addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, block / 2));
         addToBot(new DrawCardAction(AbstractDungeon.player, DRAW / 2));
+    }
+
+    @Override
+    public List<TooltipInfo> getCustomTooltips() {
+        if (this.customTooltips == null) {
+            this.customTooltips = new ArrayList<>();
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            this.customTooltips.add(shadowTooltip);
+        }
+        return this.customTooltips;
     }
 
     @Override

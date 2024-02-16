@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.powers.GainStrengthPower;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 
 public class Humiliate extends BaseCard {
@@ -16,36 +17,33 @@ public class Humiliate extends BaseCard {
             Deathbringer.Enums.CARD_COLOR,
             CardType.SKILL,
             CardRarity.UNCOMMON,
-            CardTarget.ALL_ENEMY, // Changed to ALL_ENEMY
-            1 // Initial energy cost
+            CardTarget.ALL_ENEMY,
+            1  // Energy cost
     );
+
+    private static final int STRENGTH_LOSS = 1; // Base Strength loss
+    private static final int UPGRADE_PLUS_STRENGTH_LOSS = 1; // Upgrade to 2 Strength loss
 
     public Humiliate() {
         super(ID, info);
-        this.exhaust = true;
+        this.baseMagicNumber = this.magicNumber = STRENGTH_LOSS;
+        this.exhaust = true; // Card exhausts after use
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        int playerStrength = 0;
-
-        // Get player's current Strength
-        if (p.hasPower("Strength")) {
-            playerStrength = p.getPower("Strength").amount;
+        // Apply Strength loss to all enemies and gain Strength for each enemy affected
+        int enemiesAffected = 0;
+        for (AbstractMonster mo : AbstractDungeon.getCurrRoom().monsters.monsters) {
+            if (!mo.isDeadOrEscaped()) {
+                addToBot(new ApplyPowerAction(mo, p, new StrengthPower(mo, -this.magicNumber), -this.magicNumber));
+                enemiesAffected++;
+            }
         }
 
-        // Strength multiplier when card is upgraded
-        int strengthMultiplier = upgraded ? 2 : 1;
-
-        if (playerStrength != 0) {
-            // Remove all Strength from the player
-            addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, -playerStrength), -playerStrength));
-
-            // Loop through all monsters in combat
-            for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
-                // Reduce strength from the enemy (twice as much if upgraded)
-                addToBot(new ApplyPowerAction(monster, p, new StrengthPower(monster, -playerStrength * strengthMultiplier), -playerStrength * strengthMultiplier));
-            }
+        // Gain Strength for each enemy affected
+        if (enemiesAffected > 0) {
+            addToBot(new ApplyPowerAction(p, p, new StrengthPower(p, enemiesAffected), enemiesAffected));
         }
     }
 
@@ -53,7 +51,7 @@ public class Humiliate extends BaseCard {
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+            upgradeMagicNumber(UPGRADE_PLUS_STRENGTH_LOSS);
             initializeDescription();
         }
     }
@@ -63,4 +61,3 @@ public class Humiliate extends BaseCard {
         return new Humiliate();
     }
 }
-

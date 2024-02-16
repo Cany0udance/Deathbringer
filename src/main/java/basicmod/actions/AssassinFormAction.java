@@ -1,5 +1,6 @@
 package basicmod.actions;
 
+import basicmod.character.Deathbringer;
 import basicmod.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -22,7 +23,7 @@ public class AssassinFormAction extends AbstractGameAction {
 
         for (int i = 0; i < stacks; i++) {
             for (AbstractCard card : p.hand.group) {
-                if (AssassinFormPower.AssassinFormShadowplayCards.contains(card.cardID)) {
+                if (card.tags.contains(Deathbringer.Enums.SHADOWPLAY)) {
                     shadowPlayTriggered = true;
                     ShadowUtility.triggerShadowplayFromExternal(card);
                 }

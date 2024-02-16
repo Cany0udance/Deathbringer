@@ -10,16 +10,31 @@
     "PROPER_NAME": "Shadowplay",
     "NAMES": [
       "shadowplay",
-      "shadowplayed"
+      "shadowplayed",
+      "shadowplays"
     ],
-    "DESCRIPTION": "A card is Shadowplayed if its actions are triggered by Shadow."
+    "DESCRIPTION": "A card is Shadowplayed if its actions are triggered by #yShadow."
   },
   {
-    "PROPER_NAME": "Progressive",
+    "PROPER_NAME": "Virulence",
     "NAMES": [
-      "progressive"
+      "virulence"
     ],
-    "DESCRIPTION": "A card with Progressive can be permanently Upgraded by fulfilling the Progressive condition."
+    "DESCRIPTION": "Whenever you apply #yPoison to an enemy, apply additional #yPoison equal to your Virulence stacks."
+  },
+  {
+    "PROPER_NAME": "Umbra",
+    "NAMES": [
+      "umbra"
+    ],
+    "DESCRIPTION": "Umbra cards will always be prioritized first for #yShadowplay."
+  },
+  {
+    "PROPER_NAME": "Penumbra",
+    "NAMES": [
+      "penumbra"
+    ],
+    "DESCRIPTION": "Penumbra cards will always be prioritized last for #yShadowplay."
   },
   {
     "PROPER_NAME": "Temporary HP",
@@ -28,13 +43,6 @@
       "temporary_hp"
     ],
     "DESCRIPTION": "A separate HP type that goes away at the end of combat."
-  },
-  {
-    "PROPER_NAME": "Strangle",
-    "NAMES": [
-      "strangle"
-    ],
-    "DESCRIPTION": "Strangled creatures take damage equal to their Strangle count whenever an Attack is played."
   },
   {
     "PROPER_NAME": "This is displayed in the tooltip.",
@@ -56,19 +64,5 @@
       "multiword_keywords"
     ],
     "DESCRIPTION": "Make sure the first element in NAMES has no underscores. The rest should use _ in the place of spaces. In card text, you'll use the underscore versions."
-  },
-  {
-    "PROPER_NAME": "Outburst",
-    "NAMES": [
-      "outburst"
-    ],
-    "DESCRIPTION": "When you reach #b5 or more Outburst, trigger an explosion that deals #b25 damage to ALL enemies, then remove your Outburst."
-  },
-  {
-    "PROPER_NAME": "Due",
-    "NAMES": [
-      "due"
-    ],
-    "DESCRIPTION": "Whenever an enemy with Due dies, gain #yStrength and #yDexterity equal to the amount of Due the enemy had, then transfer remaining Due to another enemy. Due is reduced by #b1 at the start of your turn."
   }
 ]

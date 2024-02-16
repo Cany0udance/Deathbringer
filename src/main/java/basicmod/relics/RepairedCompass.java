@@ -33,10 +33,6 @@ public class RepairedCompass extends BaseRelic {
         }
     }
 
-    public void atTurnStart() {
-        this.grayscale = false;
-    }
-
     @Override
     public String getUpdatedDescription() {
         return DESCRIPTIONS[0];

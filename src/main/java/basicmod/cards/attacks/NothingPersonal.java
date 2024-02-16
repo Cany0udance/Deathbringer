@@ -1,64 +1,91 @@
 package basicmod.cards.attacks;
 
+import basemod.helpers.TooltipInfo;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
-import basicmod.powers.StranglePower;
 import basicmod.util.CardStats;
+import basicmod.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.powers.NextTurnBlockPower;
-import com.megacrit.cardcrawl.vfx.ThoughtBubble;
+import com.megacrit.cardcrawl.vfx.combat.VerticalImpactEffect;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NothingPersonal extends BaseCard {
     public static final String ID = makeID("NothingPersonal");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
-            CardType.ATTACK,
+            CardType.SKILL,
             CardRarity.COMMON,
             CardTarget.ENEMY,
-            2
+            1  // Energy cost
     );
 
-    private static final int DAMAGE = 13;
-    private static final int UPG_DAMAGE = 17;
-    private static final int STRANGLE = 3;
-    private static final int UPG_STRANGLE = 1; // Upgrade amount
+    private static final int DAMAGE = 25;
+    private static final int UPGRADE_PLUS_DAMAGE = 5;
+    private List<TooltipInfo> customTooltips = null;
 
     public NothingPersonal() {
         super(ID, info);
-        setDamage(DAMAGE, UPG_DAMAGE);
-        setMagic(STRANGLE, UPG_STRANGLE);
+        setDamage(DAMAGE);  // Set the damage value
+        this.tags.add(Deathbringer.Enums.SHADOW);
+        this.tags.add(Deathbringer.Enums.SHADOWPLAY);
+        this.tags.add(Deathbringer.Enums.PENUMBRA);
+        setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-            addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
-        if (m == null || (m.intent != AbstractMonster.Intent.ATTACK &&
-                m.intent != AbstractMonster.Intent.ATTACK_BUFF &&
-                m.intent != AbstractMonster.Intent.ATTACK_DEBUFF &&
-                m.intent != AbstractMonster.Intent.ATTACK_DEFEND)) {
-            addToBot(new ApplyPowerAction(m, p, new StranglePower(m, magicNumber), magicNumber));
+        // Since the primary effect is Shadowplay, this does nothing on direct play
+        ShadowUtility.triggerGeneralShadowEffect(this);
+    }
+
+    public void triggerHalfEffect() {
+    }
+
+    public void triggerShadowplayEffect() {
+        AbstractPlayer p = AbstractDungeon.player;
+        // Deal damage to a random enemy
+        AbstractMonster randomTarget = AbstractDungeon.getCurrRoom().monsters.getRandomMonster(true);
+        if (randomTarget != null) {
+            int calculatedDamage = damage;
+            if (randomTarget.hasPower("Vulnerable")) {
+                calculatedDamage *= 1.5; // Assuming this 1.5 multiplier is correct for your game mechanics
+            }
+            addToBot(new VFXAction(new VerticalImpactEffect(randomTarget.hb.cX + randomTarget.hb.width / 4.0F, randomTarget.hb.cY - randomTarget.hb.height / 4.0F)));
+            addToBot(new DamageAction(randomTarget, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
         }
     }
 
     @Override
-    public AbstractCard makeCopy() {
-        return new NothingPersonal();
+    public List<TooltipInfo> getCustomTooltips() {
+        if (this.customTooltips == null) {
+            this.customTooltips = new ArrayList<>();
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            this.customTooltips.add(shadowTooltip);
+        }
+        return this.customTooltips;
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE - DAMAGE);
-            upgradeMagicNumber(UPG_STRANGLE);
+            upgradeDamage(UPGRADE_PLUS_DAMAGE);
             initializeDescription();
         }
+    }
+
+    @Override
+    public AbstractCard makeCopy() {
+        return new NothingPersonal();
     }
 }

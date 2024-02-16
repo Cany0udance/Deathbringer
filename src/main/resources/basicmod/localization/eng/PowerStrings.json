@@ -58,16 +58,12 @@
       "In #b1 turn, #b%d damage will be dealt to this enemy."
     ]
   },
-  "${modID}:ExcelPower": {
-    "NAME": "Excel",
+  "${modID}:LivelihoodPower": {
+    "NAME": "Livelihood",
     "DESCRIPTIONS": [
-      "If you finish combat without taking attack damage, raise your Max HP by #b%d."
-    ]
-  },
-  "${modID}:NooseweaverPower": {
-    "NAME": "Nooseweaver",
-    "DESCRIPTIONS": [
-      "At the end of your turn, ALL enemies gain #b%d #yStrangle for each card played that turn."
+      "Whenever a card is #yShadowplayed, #yUpgrade #b",
+      " random card in your hand.",
+      " random cards in your hand."
     ]
   },
   "${modID}:OpeningPower": {
@@ -79,7 +75,7 @@
   "${modID}:RiskyBusinessPower": {
     "NAME": "Risky Business",
     "DESCRIPTIONS": [
-      "Whenever you gain #yOutburst, draw #b%d %s."
+      "Whenever you gain Poison, draw #b%d %s."
     ]
   },
   "${modID}:ThrivePower": {
@@ -106,7 +102,13 @@
   "${modID}:DominatePower": {
     "NAME": "Dominate",
     "DESCRIPTIONS": [
-      "Whenever you apply #yStrangle to an enemy, also apply #b%d #yWeak and #b%d #yVulnerable."
+      "Whenever you apply #yPoison to an enemy, also apply #b%d #yWeak and #b%d #yVulnerable."
+    ]
+  },
+  "${modID}:VirulencePower": {
+    "NAME": "Virulence",
+    "DESCRIPTIONS": [
+      "Whenever you apply #yPoison to an enemy, apply an additional #b%d #yPoison."
     ]
   },
   "${modID}:TradePower": {
@@ -116,11 +118,11 @@
       " #yBlock."
     ]
   },
-  "${modID}:ThresholdPower": {
-    "NAME": "Threshold",
+  "${modID}:RefinementPower": {
+    "NAME": "Refinement",
     "DESCRIPTIONS": [
-      "#yOutburst now deals #b",
-      " more damage to enemies."
+      "At the start of your turn, gain #b",
+      " #yVirulence."
     ]
   },
   "${modID}:Due": {
@@ -128,6 +130,13 @@
     "DESCRIPTIONS": [
       "When this enemy dies, gain #b",
       " #yStrength and #yDexterity, then transfer remaining Due on to another enemy."
+    ]
+  },
+  "${modID}:NecrosisPower": {
+    "NAME": "Necrosis",
+    "DESCRIPTIONS": [
+      "This creature will gain #b",
+      " #yPoison per turn."
     ]
   }
 }

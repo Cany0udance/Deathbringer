@@ -6,6 +6,10 @@ import basemod.abstracts.CustomSavable;
 import basemod.interfaces.*;
 import basicmod.cards.BaseCard;
 import basicmod.cards.attacks.ChainedHits;
+import basicmod.potions.BasePotion;
+import basicmod.potions.HemlockSip;
+import basicmod.potions.LiquidCongregation;
+import basicmod.potions.TwistedPair;
 import basicmod.powers.ExtinctionMarkPower;
 import basicmod.relics.BaseRelic;
 import basicmod.util.GeneralUtils;
@@ -29,7 +33,6 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import com.megacrit.cardcrawl.potions.AbstractPotion;
 import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
@@ -54,7 +57,6 @@ public class Deathbringer implements
         EditRelicsSubscriber,
         PostInitializeSubscriber,
         OnPlayerTurnStartSubscriber,
-        PostPotionUseSubscriber,
         OnStartBattleSubscriber,
         PostBattleSubscriber,
         AddAudioSubscriber,
@@ -79,7 +81,6 @@ public class Deathbringer implements
     private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
     public static final Color RED_BORDER_GLOW_COLOR = new Color(1.0f, 0.0f, 0.0f, 0.5f); // Red color
 
-    private static int potionCount = 0;
     public static final String UNSHEATHE_KEY = "Unsheathe";
     public static final String UNSHEATHE_OGG = "basicmod/audio/unsheathe.ogg";
     public static final String CLEANKILL_KEY = "CleanKill";
@@ -90,8 +91,7 @@ public class Deathbringer implements
     public static final String FLASHLIGHTOFF_OGG = "basicmod/audio/FlashlightOff.ogg";
     private static int permanentStrengthGain = 0;
     public static int chainedHitsCounter = 2;
-
-
+    public static int shadowplaysThisCombat = 0;
 
 
     //This is used to prefix the IDs of various objects like cards and relics,
@@ -124,20 +124,15 @@ public class Deathbringer implements
                 AbstractDungeon.actionManager.addToBottom(new InstantKillAction(m));
             }
             ShadowUtility.resetFirstShadowplayTrigger();
-            ShadowUtility.repairedTriggered = false;
         }
     }
 
 
     @Override
     public void receivePostDungeonInitialize() {
+        shadowplaysThisCombat = 0;
         permanentStrengthGain = 0;  // Reset the permanent Strength gain
         chainedHitsCounter = 2;
-    }
-
-    @Override
-    public void receivePostPotionUse(AbstractPotion potion) {
-        potionCount++;
     }
 
     @Override
@@ -146,10 +141,6 @@ public class Deathbringer implements
         BaseMod.addAudio(CLEANKILL_KEY, CLEANKILL_OGG);
         BaseMod.addAudio(FLASHLIGHTON_KEY, FLASHLIGHTON_OGG);
         BaseMod.addAudio(FLASHLIGHTOFF_KEY, FLASHLIGHTOFF_OGG);
-    }
-
-    public static int getPotionCount() {
-        return potionCount;
     }
 
     // Reset at the start of each combat if necessary
@@ -173,7 +164,7 @@ public class Deathbringer implements
 
     @Override
     public void receiveOnBattleStart(AbstractRoom room) {
-        potionCount = 0;
+        shadowplaysThisCombat = 0;
         globalCardsToReplay.clear();
         if (permanentStrengthGain > 0) {
             AbstractDungeon.actionManager.addToBottom(
@@ -182,7 +173,7 @@ public class Deathbringer implements
             );
         }
         ShadowUtility.shatteredTriggered = false;
-        ShadowUtility.repairedTriggered = false;
+        ShadowUtility.clothTriggered = false;
         resetNightlightVFX();
         chainedHitsCounter = 2;
 
@@ -207,6 +198,7 @@ public class Deathbringer implements
     @Override
     public void receivePostBattle(AbstractRoom room) {
         chainedHitsCounter = 2;
+        shadowplaysThisCombat = 0;
     }
 
     // Implement CustomSavable
@@ -251,6 +243,7 @@ public class Deathbringer implements
 
     @Override
     public void receivePostInitialize() {
+        registerPotions();
         //This loads the image used as an icon in the in-game mods menu.
         Texture badgeTexture = TextureLoader.getTexture(imagePath("badge.png"));
         //Set up the mod information displayed in the in-game mods menu.
@@ -385,6 +378,18 @@ public class Deathbringer implements
     public void receiveEditCharacters() {
         BaseMod.addCharacter(new basicmod.character.Deathbringer(),
                 CHAR_SELECT_BUTTON, CHAR_SELECT_PORTRAIT, basicmod.character.Deathbringer.Enums.DEATHBRINGER);
+    }
+
+    public static void registerPotions() {
+        new AutoAdd(modID) //Loads files from this mod
+                .packageFilter(BasePotion.class) //In the same package as this class
+                .any(BasePotion.class, (info, potion) -> { //Run this code for any classes that extend this class
+                    //These three null parameters are colors.
+                    //If they're not null, they'll overwrite whatever color is set in the potions themselves.
+                    //This is an old feature added before having potions determine their own color was possible.
+                    BaseMod.addPotion(potion.getClass(), null, null, null, potion.ID, potion.playerClass);
+                    //playerClass will make a potion character-specific. By default, it's null and will do nothing.
+                });
     }
 
     @Override

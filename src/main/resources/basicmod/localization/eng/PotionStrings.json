@@ -1,12 +1,22 @@
 {
-  "${modID}:PotionID": {
-    "NAME": "Some Kind of Potion",
+  "${modID}:TwistedPair": {
+    "NAME": "Twisted Pair",
     "DESCRIPTIONS": [
-      "Little",
-      " pieces ",
-      "that get put together",
-      " into a description.",
-      " Exactly how depends on the potion, and you can set it up however you want."
+      "Add #b",
+      " of the same random playable #yShadow card to your hand. They cost #b0 this turn."
+    ]
+  },
+  "${modID}:HemlockSip": {
+    "NAME": "Hemlock Sip",
+    "DESCRIPTIONS": [
+      "Gain #b1 #yPoison. Gain #b",
+      " #yVirulence."
+    ]
+  },
+  "${modID}:LiquidCongregation": {
+    "NAME": "Liquid Congregation",
+    "DESCRIPTIONS": [
+      "Shuffle ALL your cards into your draw pile. Draw as many #yShadow cards as possible."
     ]
   }
 }

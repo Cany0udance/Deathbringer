@@ -5,9 +5,7 @@ import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
-import com.megacrit.cardcrawl.actions.common.GainEnergyAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -20,43 +18,61 @@ public class OlReliable extends BaseCard {
             CardType.ATTACK,
             CardRarity.UNCOMMON,
             CardTarget.ENEMY,
-            2 // Energy cost
+            2  // Energy cost
     );
 
-    private static final int DAMAGE = 11;
-    private static final int UPG_DAMAGE = 15;
-    private static final int BLOCK = 11;
-    private static final int UPG_BLOCK = 15;
+    private static final int DAMAGE = 13;
+    private static final int BLOCK = 13;
+    private static final int UPGRADE_PLUS_DAMAGE_BLOCK = 3;  // Upgrades to 16 damage and block
 
     public OlReliable() {
         super(ID, info);
-        setDamage(DAMAGE, UPG_DAMAGE);
-        setBlock(BLOCK, UPG_BLOCK);
+        this.baseDamage = DAMAGE;
+        this.baseBlock = BLOCK;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // Deal damage
-        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_LIGHT));
-
-        // Gain Block if the enemy intends to attack
-        if (m != null && (m.intent == AbstractMonster.Intent.ATTACK || m.intent == AbstractMonster.Intent.ATTACK_BUFF || m.intent == AbstractMonster.Intent.ATTACK_DEBUFF || m.intent == AbstractMonster.Intent.ATTACK_DEFEND)) {
-            addToBot(new GainBlockAction(p, p, block));
-        }
+        addToBot(new DamageAction(m, new DamageInfo(p, damage, damageTypeForTurn), AbstractGameAction.AttackEffect.SLASH_HEAVY));
+        addToBot(new GainBlockAction(p, p, block));
     }
 
     @Override
-    public AbstractCard makeCopy() {
-        return new OlReliable();
+    public boolean canUse(AbstractPlayer p, AbstractMonster m) {
+        this.cantUseMessage = cardStrings.EXTENDED_DESCRIPTION[0];
+        if (!super.canUse(p, m)) {
+            return false;
+        }
+
+        // Check for adjacent Shadow card using keywords
+        boolean foundAdjacentShadow = false;
+        int cardIndex = p.hand.group.indexOf(this);
+
+        // Check the previous card if it exists and contains the shadow keyword
+        if (cardIndex > 0 && p.hand.group.get(cardIndex - 1).tags.contains(Deathbringer.Enums.SHADOW)) {
+            foundAdjacentShadow = true;
+        }
+
+        // Check the next card if it exists and contains the shadow keyword
+        if (cardIndex < p.hand.group.size() - 1 && p.hand.group.get(cardIndex + 1).tags.contains(Deathbringer.Enums.SHADOW)) {
+            foundAdjacentShadow = true;
+        }
+
+        return foundAdjacentShadow;
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE - DAMAGE);
-            upgradeBlock(UPG_BLOCK - BLOCK);
+            upgradeDamage(UPGRADE_PLUS_DAMAGE_BLOCK);
+            upgradeBlock(UPGRADE_PLUS_DAMAGE_BLOCK);
             initializeDescription();
         }
+    }
+
+    @Override
+    public AbstractCard makeCopy() {
+        return new OlReliable();
     }
 }

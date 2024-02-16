@@ -6,7 +6,6 @@ import basemod.interfaces.PostDrawSubscriber;
 import basicmod.actions.ResetFlagAction;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
-import basicmod.powers.OutburstPower;
 import basicmod.util.CardStats;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -61,20 +60,11 @@ public class Arsenal extends BaseCard implements PostDrawSubscriber {
         addToBot(new ResetFlagAction(this));
     }
 
+
     @Override
     public void receivePostDraw(AbstractCard c) {
-        // Only act if triggeredDraw is true
-        if (this.triggeredDraw) {
-            ArrayList<String> shadowCardIDs = new ArrayList<>(Arrays.asList(
-                    "Deathbringer:Mantle", "Deathbringer:Shroud", "Deathbringer:Protrusion",
-                    "Deathbringer:Liability",
-                    "Deathbringer:Injection", "Deathbringer:Admire", "Deathbringer:Expurgate",
-                    "Deathbringer:Shadowstep", "Deathbringer:VanishingAct",
-                    "Deathbringer:Sanctuary", "Deathbringer:SubconsciousKiller", "Deathbringer:ShadowStrike", "Deathbringer:ShadowDefend", "Deathbringer:ConcealedBlade", "Deathbringer:Intuition"
-            ));
-            if (shadowCardIDs.contains(c.cardID)) {
-                shadowCardsDrawn++; // Increment for each Shadow card drawn
-            }
+        if (this.triggeredDraw && c.tags.contains(Deathbringer.Enums.SHADOW)) {
+            shadowCardsDrawn++; // Increment only if the drawn card has the SHADOW tag
         }
     }
 

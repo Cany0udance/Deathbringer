@@ -3,15 +3,15 @@ package basicmod.cards.attacks;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
-import basicmod.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.LoseHPAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.vfx.combat.VerticalImpactEffect;
 
 public class Expurgate extends BaseCard {
     public static final String ID = makeID("Expurgate");
@@ -20,72 +20,39 @@ public class Expurgate extends BaseCard {
             CardType.ATTACK,
             CardRarity.RARE,
             CardTarget.ENEMY,
-            4  // Cost
+            0  // Energy cost
     );
 
-    private static final int DAMAGE = 100;
-    private static final int UPG_DAMAGE = 50;
-    private static final int HP_LOSS = 8;
+    private static final int DAMAGE = 80;
+    private static final int UPGRADE_PLUS_DMG = 40;  // Upgrades to 120 damage
 
     public Expurgate() {
         super(ID, info);
-        setDamage(DAMAGE);
-        this.magicNumber = this.baseMagicNumber = HP_LOSS;
+        this.baseDamage = DAMAGE;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // Deal damage
-        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-        // Lose HP
-        addToBot(new LoseHPAction(p, p, magicNumber));
-
-        ShadowUtility.triggerGeneralShadowEffect(this);
+        addToBot(new VFXAction(new VerticalImpactEffect(m.hb.cX + m.hb.width / 4.0F, m.hb.cY - m.hb.height / 4.0F)));
+        addToBot(new DamageAction(m, new DamageInfo(p, damage, damageTypeForTurn), AbstractGameAction.AttackEffect.FIRE));
     }
 
-    public void triggerFullEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractMonster m = AbstractDungeon.getRandomMonster();
-                if (m != null) {
-                    int calculatedDamage = damage;
-                    if (m.hasPower("Vulnerable")) {
-                        calculatedDamage *= 1.5;
-                    }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-                    addToBot(new LoseHPAction(p, p, magicNumber));
-                }
-                this.isDone = true;
-            }
-        });
-    }
+    @Override
+    public boolean canUse(AbstractPlayer p, AbstractMonster m) {
+        this.cantUseMessage = cardStrings.EXTENDED_DESCRIPTION[0];
+        if (!super.canUse(p, m)) {
+            return false;
+        }
 
-    public void triggerHalfEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractMonster m = AbstractDungeon.getRandomMonster();
-                if (m != null) {
-                    int calculatedDamage = damage / 2;
-                    if (m.hasPower("Vulnerable")) {
-                        calculatedDamage *= 1.5;
-                    }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
-                    addToBot(new LoseHPAction(p, p, magicNumber / 2));
-                }
-                this.isDone = true;
-            }
-        });
+        // Check if the draw pile is empty
+        return AbstractDungeon.player.drawPile.size() == 0;
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE);
+            upgradeDamage(UPGRADE_PLUS_DMG);
             initializeDescription();
         }
     }
