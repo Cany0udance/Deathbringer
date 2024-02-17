@@ -226,7 +226,7 @@
   },
   "${modID}:TunnelVision": {
     "NAME": "Tunnel Vision",
-    "DESCRIPTION": "Discarded if not the first card played while in hand. NL Deal !D! damage and apply !M! Vulnerable. NL Discard non-adjacent cards."
+    "DESCRIPTION": "Deal !D! damage and apply !M! Vulnerable. NL Discard non-adjacent cards."
   },
   "${modID}:OlReliable": {
     "NAME": "Ol' Reliable",

@@ -15,6 +15,7 @@ import basicmod.relics.ShatteredCompass;
 import basicmod.relics.TornCloth;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.actions.common.ExhaustSpecificCardAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -291,6 +292,9 @@ public class ShadowUtility {
         }
         if (card instanceof Injection) {
             ((Injection) card).triggerHalfEffect();
+        }
+        if (card instanceof WaxingFlask) {
+            ((WaxingFlask) card).triggerHalfEffect();
         }
         if (card instanceof Breach) {
             ((Breach) card).triggerHalfEffect();

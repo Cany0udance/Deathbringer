@@ -25,8 +25,8 @@ public class Grasp extends BaseCard {
     private static final int DAMAGE = 9;
     private static final int UPG_DAMAGE = 12;
 
-    private static final int POISON = 3;
-    private static final int UPG_POISON = 4; // New constant for upgraded Strangle
+    private static final int POISON = 4;
+    private static final int UPG_POISON = 5;
 
     public Grasp() {
         super(ID, info);

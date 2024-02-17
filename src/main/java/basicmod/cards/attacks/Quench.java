@@ -34,6 +34,7 @@ public class Quench extends BaseCard {
         this.tags.add(Deathbringer.Enums.UMBRA);
         setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
         setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
+        this.exhaust = true;
     }
 
     @Override

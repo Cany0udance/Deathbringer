@@ -24,7 +24,7 @@ public class NothingPersonal extends BaseCard {
             Deathbringer.Enums.CARD_COLOR,
             CardType.SKILL,
             CardRarity.COMMON,
-            CardTarget.ENEMY,
+            CardTarget.SELF,
             1  // Energy cost
     );
 

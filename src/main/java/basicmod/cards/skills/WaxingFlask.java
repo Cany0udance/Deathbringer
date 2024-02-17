@@ -3,6 +3,7 @@ package basicmod.cards.skills;
 import basicmod.cards.BaseCard;
 import basicmod.character.Deathbringer;
 import basicmod.util.CardStats;
+import basicmod.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -37,6 +38,9 @@ public class WaxingFlask extends BaseCard {
 
         addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, magicNumber), magicNumber));
         addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, magicNumber), magicNumber));
+        if (upgraded) {
+            ShadowUtility.triggerGeneralShadowEffect(this);
+        }
     }
 
     public void triggerHalfEffect() {
@@ -55,9 +59,11 @@ public class WaxingFlask extends BaseCard {
     @Override
     public void upgrade() {
         if (!upgraded) {
+            upgradeName(); // Marks the card as upgraded and updates its name accordingly
             setBackgroundTexture("basicmod/images/character/cardback/shadowskill.png", "basicmod/images/character/cardback/shadowskill_p.png");
             setOrbTexture("basicmod/images/character/cardback/shadowenergyorb.png", "basicmod/images/character/cardback/shadowenergyorb_p.png");
             this.tags.add(Deathbringer.Enums.SHADOW); // Assuming SHADOW is a defined tag in your Enums for Shadow cards
+            this.upgraded = true;
         }
     }
 

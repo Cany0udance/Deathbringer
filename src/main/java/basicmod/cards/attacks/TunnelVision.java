@@ -55,11 +55,6 @@ public class TunnelVision extends BaseCard {
     }
 
     @Override
-    public void triggerOnOtherCardPlayed(AbstractCard c) {
-        addToBot(new DiscardSpecificCardAction(this));
-    }
-
-    @Override
     public AbstractCard makeCopy() {
         return new TunnelVision();
     }

@@ -9,7 +9,7 @@
   "${modID}:HemlockSip": {
     "NAME": "Hemlock Sip",
     "DESCRIPTIONS": [
-      "Gain #b1 #yPoison. Gain #b",
+      "Gain #b2 #yPoison. Gain #b",
       " #yVirulence."
     ]
   },
