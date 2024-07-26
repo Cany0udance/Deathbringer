@@ -108,7 +108,7 @@
   "${modID}:VirulencePower": {
     "NAME": "Virulence",
     "DESCRIPTIONS": [
-      "Whenever you apply #yPoison to an enemy, apply an additional #b%d #yPoison."
+      "Whenever an enemy gains #yPoison, they gain an additional #b%d #yPoison."
     ]
   },
   "${modID}:TradePower": {

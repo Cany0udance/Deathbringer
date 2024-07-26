@@ -20,7 +20,7 @@
     "NAMES": [
       "virulence"
     ],
-    "DESCRIPTION": "Whenever you apply #yPoison to an enemy, apply additional #yPoison equal to your Virulence stacks."
+    "DESCRIPTION": "Whenever an enemy gains #yPoison, they gain additional #yPoison equal to your Virulence stacks."
   },
   {
     "PROPER_NAME": "Umbra",

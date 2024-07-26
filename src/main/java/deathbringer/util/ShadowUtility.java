@@ -1,5 +1,6 @@
 package deathbringer.util;
 
+import basemod.BaseMod;
 import deathbringer.Deathbringer;
 import deathbringer.cards.attacks.*;
 import deathbringer.cards.skills.*;
@@ -36,6 +37,12 @@ public class ShadowUtility {
     public static boolean shatteredTriggered = false;  // For tracking Shattered Compass
     public static boolean clothTriggered = false;  // For tracking Torn Cloth
     private static final Logger logger = LogManager.getLogger(ShadowUtility.class.getName());
+
+    private static Set<AbstractCard> processedCards = new HashSet<>();
+
+    public static void resetProcessedCards() {
+        processedCards.clear();
+    }
 
     public static void triggerGeneralShadowEffect(AbstractCard playedCard) {
         AbstractPlayer p = AbstractDungeon.player;
@@ -483,6 +490,7 @@ public class ShadowUtility {
     }
 
     private static void triggerLightsOutEffect(AbstractPlayer p, AbstractCard excludeCard1, AbstractCard excludeCard2) {
+        BaseMod.logger.info("triggerLightsOutEffect started. Hand size: " + p.hand.size());
         for (AbstractCard c : new ArrayList<>(p.hand.group)) { // Use a copy of the group to avoid ConcurrentModificationException
             if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) && c != excludeCard1 && c != excludeCard2) { // Exclude both specified cards
                 if (c instanceof LightsOut) continue; // Skip "Lights Out"
@@ -555,10 +563,18 @@ public class ShadowUtility {
     }
 
     private static void AssassinFormLightsOut(AbstractPlayer p) {
+        BaseMod.logger.info("AssassinFormLightsOut started. Hand size: " + p.hand.size());
+
+        // Log the contents of the hand
+        BaseMod.logger.info("Hand contents:");
+        for (AbstractCard c : p.hand.group) {
+            BaseMod.logger.info("- " + c.name + " (ID: " + c.cardID + ", Shadow: " + c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) + ", Shadowplay: " + c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOWPLAY) + ")");
+        }
+
         for (AbstractCard c : new ArrayList<>(p.hand.group)) {
-            if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW)) {
-                // Exclude "Lights Out" from triggering its own Shadowplay effect again
-                if (c instanceof LightsOut) continue; // Skip "Lights Out"
+            if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) && !(c instanceof LightsOut) && !processedCards.contains(c)) {
+                BaseMod.logger.info("Processing card: " + c.name + " (ID: " + c.cardID + ")");
+                processedCards.add(c);
 
                 float cardX = c.hb.cX;
                 float cardY = c.hb.cY;
@@ -567,20 +583,27 @@ public class ShadowUtility {
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(new ShadowEffect(cardX, cardY), 0.1F));
 
                 // Trigger half effect and shadowplay effect
+                BaseMod.logger.info("Triggering half effect for: " + c.name);
                 triggerHalfEffect(c);
                 if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOWPLAY)) {
+                    BaseMod.logger.info("Triggering shadowplay effect for: " + c.name);
                     triggerShadowplayEffect(c);
                 }
                 Deathbringer.shadowplaysThisCombat++;
 
-                // Discard the card
                 final AbstractCard cardToDiscard = c;
                 if (!cardToDiscard.cardID.equals(Quench.ID)) {
+                    BaseMod.logger.info("Queueing discard action for: " + cardToDiscard.name);
                     AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
                         @Override
                         public void update() {
-                            p.hand.moveToDiscardPile(cardToDiscard);
-                            cardToDiscard.triggerOnManualDiscard();
+                            if (p.hand.contains(cardToDiscard)) {
+                                BaseMod.logger.info("Discarding card: " + cardToDiscard.name);
+                                p.hand.moveToDiscardPile(cardToDiscard);
+                                cardToDiscard.triggerOnManualDiscard();
+                            } else {
+                                BaseMod.logger.info("Card already discarded, skipping: " + cardToDiscard.name);
+                            }
                             this.isDone = true;
                         }
                     });
@@ -626,6 +649,12 @@ public class ShadowUtility {
                 }
             }
         }
+        BaseMod.logger.info("Final hand contents after processing:");
+        for (AbstractCard c : p.hand.group) {
+            BaseMod.logger.info("- " + c.name + " (ID: " + c.cardID + ")");
+        }
+
+        BaseMod.logger.info("AssassinFormLightsOut finished. Processed cards: " + processedCards.size());
     }
 
     private static void applyOminousNoteEffect() {

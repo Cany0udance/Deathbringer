@@ -2,6 +2,7 @@ package deathbringer.powers;
 
 import deathbringer.actions.AssassinFormAction;
 import com.megacrit.cardcrawl.core.AbstractCreature;
+import deathbringer.util.ShadowUtility;
 
 import static deathbringer.Deathbringer.makeID;
 
@@ -33,6 +34,7 @@ public class AssassinFormPower extends BasePower {
 
     @Override
     public void atStartOfTurnPostDraw() {
+        ShadowUtility.resetProcessedCards();
         flashPower = false; // Reset the flash indicator before the turn starts
         addToBot(new AssassinFormAction(this.amount, this)); // Pass `this` to be able to update `flashPower`
     }

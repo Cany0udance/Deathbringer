@@ -149,6 +149,7 @@ public class Deathbringer implements
                 .any(BaseRelic.class, (info, relic) -> { //Run this code for any classes that extend this class
                     if (relic.pool != null)
                         BaseMod.addRelicToCustomPool(relic, relic.pool); //Register a custom character specific relic
+                    else
                         BaseMod.addRelic(relic, relic.relicType); //Register a shared or base game character specific relic
                 });
     }

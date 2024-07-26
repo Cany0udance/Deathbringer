@@ -20,7 +20,7 @@
 
     <!-- This information will be displayed in ModTheSpire, the modded launcher. -->
     <name>The Deathbringer</name>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
     <!-- Avoid using \ in this description, as they can cause the description to fail to load. -->
     <!-- If you really want to use them, you'll need to "escape" them by putting another one in front, like \\ -->
     <description>Adds a new character to the game, The Deathbringer.</description>
