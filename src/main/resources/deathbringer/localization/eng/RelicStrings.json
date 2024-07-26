@@ -52,7 +52,7 @@
     "NAME": "Snecko Tooth",
     "FLAVOR": "A tooth of a fallen Snecko. Much smaller than you imagined.",
     "DESCRIPTIONS": [
-      "Whenever an Attack deals unblocked damage, apply 1 #yPoison."
+      "Whenever an Attack deals unblocked damage, apply #b1 #yPoison."
     ]
   },
   "${modID}:AssassinsTie": {
@@ -67,6 +67,13 @@
     "FLAVOR": "Fortunately, you happen to thrive in the presence of despair. Yum!",
     "DESCRIPTIONS": [
       "The first two times you gain #yPoison each turn, draw a card."
+    ]
+  },
+  "${modID}:Deadsprout": {
+    "NAME": "Deadsprout",
+    "FLAVOR": "A manifestation of Spireblight. Leeches the life from nearby flora.",
+    "DESCRIPTIONS": [
+      "Whenever you gain #y${modID}:Virulence, gain #b1 #yStrength."
     ]
   }
 }

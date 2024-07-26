@@ -348,5 +348,9 @@
   "${modID}:Lookout": {
     "NAME": "Lookout",
     "DESCRIPTION": "Gain !B! Block."
+  },
+  "${modID}:CrookedMile": {
+    "NAME": "Crooked Mile",
+    "DESCRIPTION": "Draw cards until your hand is full. NL Increase the cost of ALL cards in hand by 1 this combat."
   }
 }

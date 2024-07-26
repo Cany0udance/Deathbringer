@@ -1,6 +1,7 @@
 package deathbringer.cards.attacks;
 
 import basemod.helpers.TooltipInfo;
+import com.megacrit.cardcrawl.powers.VulnerablePower;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
 import deathbringer.util.CardStats;
@@ -54,7 +55,7 @@ public class Injection extends BaseCard {
     public void dealDamageAndApplyPoison(AbstractPlayer p, AbstractMonster m, int dealDamage, int applyPoison) {
 
         // Check for Vulnerable power and increase damage if present
-        if (m.hasPower("Vulnerable")) {
+        if (m.hasPower(VulnerablePower.POWER_ID)) {
             dealDamage *= 1.5;
         }
 

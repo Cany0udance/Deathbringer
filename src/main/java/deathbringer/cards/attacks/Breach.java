@@ -24,7 +24,7 @@ public class Breach extends BaseCard {
             CardType.ATTACK,
             CardRarity.RARE,
             CardTarget.ALL_ENEMY,
-            1  // Energy cost
+            2  // Energy cost
     );
 
     private static final int DAMAGE = 12;

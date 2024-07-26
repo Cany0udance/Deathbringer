@@ -1,5 +1,6 @@
 package deathbringer.cards.attacks;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
 import deathbringer.powers.NecrosisPower;
@@ -35,8 +36,8 @@ public class NecroticJab extends BaseCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         // Deal damage twice
-        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
-        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL)));
+        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
 
         // Apply NecrosisPower
         addToBot(new ApplyPowerAction(m, p, new NecrosisPower(m, this.magicNumber), this.magicNumber));
