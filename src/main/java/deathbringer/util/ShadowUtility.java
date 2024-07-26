@@ -564,7 +564,7 @@ public class ShadowUtility {
 
     private static void AssassinFormLightsOut(AbstractPlayer p) {
         for (AbstractCard c : new ArrayList<>(p.hand.group)) {
-            if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) && !(c instanceof LightsOut) && !processedCards.contains(c)) {
+            if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) && !processedCards.contains(c)) {
                 processedCards.add(c);
 
                 float cardX = c.hb.cX;
