@@ -563,17 +563,8 @@ public class ShadowUtility {
     }
 
     private static void AssassinFormLightsOut(AbstractPlayer p) {
-        BaseMod.logger.info("AssassinFormLightsOut started. Hand size: " + p.hand.size());
-
-        // Log the contents of the hand
-        BaseMod.logger.info("Hand contents:");
-        for (AbstractCard c : p.hand.group) {
-            BaseMod.logger.info("- " + c.name + " (ID: " + c.cardID + ", Shadow: " + c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) + ", Shadowplay: " + c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOWPLAY) + ")");
-        }
-
         for (AbstractCard c : new ArrayList<>(p.hand.group)) {
             if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOW) && !(c instanceof LightsOut) && !processedCards.contains(c)) {
-                BaseMod.logger.info("Processing card: " + c.name + " (ID: " + c.cardID + ")");
                 processedCards.add(c);
 
                 float cardX = c.hb.cX;
@@ -583,26 +574,20 @@ public class ShadowUtility {
                 AbstractDungeon.actionManager.addToBottom(new VFXAction(new ShadowEffect(cardX, cardY), 0.1F));
 
                 // Trigger half effect and shadowplay effect
-                BaseMod.logger.info("Triggering half effect for: " + c.name);
                 triggerHalfEffect(c);
                 if (c.tags.contains(deathbringer.character.Deathbringer.Enums.SHADOWPLAY)) {
-                    BaseMod.logger.info("Triggering shadowplay effect for: " + c.name);
                     triggerShadowplayEffect(c);
                 }
                 Deathbringer.shadowplaysThisCombat++;
 
                 final AbstractCard cardToDiscard = c;
                 if (!cardToDiscard.cardID.equals(Quench.ID)) {
-                    BaseMod.logger.info("Queueing discard action for: " + cardToDiscard.name);
                     AbstractDungeon.actionManager.addToBottom(new AbstractGameAction() {
                         @Override
                         public void update() {
                             if (p.hand.contains(cardToDiscard)) {
-                                BaseMod.logger.info("Discarding card: " + cardToDiscard.name);
                                 p.hand.moveToDiscardPile(cardToDiscard);
                                 cardToDiscard.triggerOnManualDiscard();
-                            } else {
-                                BaseMod.logger.info("Card already discarded, skipping: " + cardToDiscard.name);
                             }
                             this.isDone = true;
                         }
@@ -649,12 +634,6 @@ public class ShadowUtility {
                 }
             }
         }
-        BaseMod.logger.info("Final hand contents after processing:");
-        for (AbstractCard c : p.hand.group) {
-            BaseMod.logger.info("- " + c.name + " (ID: " + c.cardID + ")");
-        }
-
-        BaseMod.logger.info("AssassinFormLightsOut finished. Processed cards: " + processedCards.size());
     }
 
     private static void applyOminousNoteEffect() {
