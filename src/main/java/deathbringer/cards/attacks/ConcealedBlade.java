@@ -3,6 +3,7 @@ package deathbringer.cards.attacks;
 import basemod.helpers.TooltipInfo;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
+import deathbringer.interfaces.ShadowEffectable;
 import deathbringer.util.CardStats;
 import deathbringer.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
@@ -18,7 +19,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConcealedBlade extends BaseCard {
+public class ConcealedBlade extends BaseCard implements ShadowEffectable {
     public static final String ID = makeID("ConcealedBlade");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
@@ -27,7 +28,6 @@ public class ConcealedBlade extends BaseCard {
             CardTarget.ENEMY,
             0
     );
-
     private static final int DAMAGE = 4;
     private static final int UPG_DAMAGE = 3;
     private List<TooltipInfo> customTooltips = null;
@@ -37,38 +37,22 @@ public class ConcealedBlade extends BaseCard {
         setDamage(DAMAGE, UPG_DAMAGE);
         this.tags.add(Deathbringer.Enums.SHADOW);
         this.tags.add(Deathbringer.Enums.SHADOWPLAY);
-        setBackgroundTexture("deathbringer/images/character/cardback/shadowattack.png", "deathbringer/images/character/cardback/shadowattack_p.png");
-        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png", "deathbringer/images/character/cardback/shadowenergyorb_p.png");
+        setBackgroundTexture("deathbringer/images/character/cardback/shadowattack.png",
+                "deathbringer/images/character/cardback/shadowattack_p.png");
+        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png",
+                "deathbringer/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        addToBot(new DamageAction(m, new DamageInfo(p, this.damage, DamageInfo.DamageType.NORMAL),
+                AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
         ShadowUtility.triggerGeneralShadowEffect(this);
     }
 
-    public void triggerFullEffect() {
-        AbstractPlayer p = AbstractDungeon.player;
-
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractMonster m = AbstractDungeon.getRandomMonster();
-                if (m != null) {
-                    int calculatedDamage = damage;
-                    if (m.hasPower("Vulnerable")) {
-                        calculatedDamage *= 1.5;
-                    }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-                }
-                this.isDone = true;
-            }
-        });
-    }
-
+    @Override
     public void triggerHalfEffect() {
         AbstractPlayer p = AbstractDungeon.player;
-
         addToBot(new AbstractGameAction() {
             @Override
             public void update() {
@@ -78,13 +62,15 @@ public class ConcealedBlade extends BaseCard {
                     if (m.hasPower("Vulnerable")) {
                         calculatedDamage *= 1.5;
                     }
-                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+                    addToBot(new DamageAction(m, new DamageInfo(p, calculatedDamage, DamageInfo.DamageType.NORMAL),
+                            AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
                 }
                 this.isDone = true;
             }
         });
     }
 
+    @Override
     public void triggerShadowplayEffect() {
         AbstractPlayer p = AbstractDungeon.player;
         addToBot(new ApplyPowerAction(p, p, new DrawCardNextTurnPower(p, 1), 1));
@@ -94,7 +80,9 @@ public class ConcealedBlade extends BaseCard {
     public List<TooltipInfo> getCustomTooltips() {
         if (this.customTooltips == null) {
             this.customTooltips = new ArrayList<>();
-            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow",
+                    "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL " +
+                            "Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
             this.customTooltips.add(shadowTooltip);
         }
         return this.customTooltips;

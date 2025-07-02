@@ -4,6 +4,7 @@ import basemod.helpers.TooltipInfo;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
 import deathbringer.effects.NightlightEffect;
+import deathbringer.interfaces.ShadowEffectable;
 import deathbringer.util.CardStats;
 import deathbringer.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.animations.VFXAction;
@@ -19,37 +20,38 @@ import com.megacrit.cardcrawl.powers.WeakPower;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Nightlight extends BaseCard {
+public class Nightlight extends BaseCard implements ShadowEffectable {
     public static final String ID = makeID("Nightlight");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
             CardType.SKILL,
             CardRarity.COMMON,
             CardTarget.SELF,
-            1  // Energy cost
+            1
     );
-
-    private static final int TEMP_DEX = 2;  // Temporary Dexterity
-    private static final int HALF_TEMP_DEX = 1; // Half Temporary Dexterity for Shadowplay
-    private static final int WEAK_AMOUNT = 1;  // Apply 1 Weak
-    private static final int UPG_WEAK_AMOUNT = 1;  // Upgrade Weak amount
+    private static final int TEMP_DEX = 2;
+    private static final int HALF_TEMP_DEX = 1;
+    private static final int WEAK_AMOUNT = 1;
+    private static final int UPG_WEAK_AMOUNT = 1;
     private static boolean vfxPlayed = false;
     private List<TooltipInfo> customTooltips = null;
 
     public Nightlight() {
         super(ID, info);
-        setMagic(WEAK_AMOUNT);  // Set the Weak effect values
+        setMagic(WEAK_AMOUNT);
         this.tags.add(Deathbringer.Enums.SHADOW);
         this.tags.add(Deathbringer.Enums.SHADOWPLAY);
         this.tags.add(Deathbringer.Enums.UMBRA);
-        setBackgroundTexture("deathbringer/images/character/cardback/shadowskill.png", "deathbringer/images/character/cardback/shadowskill_p.png");
-        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png", "deathbringer/images/character/cardback/shadowenergyorb_p.png");
+        setBackgroundTexture("deathbringer/images/character/cardback/shadowskill.png",
+                "deathbringer/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png",
+                "deathbringer/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        applyTemporaryDexterity(p, TEMP_DEX);  // Gain Temporary Dexterity
-        ShadowUtility.triggerGeneralShadowEffect(this);  // Trigger Shadow effect
+        applyTemporaryDexterity(p, TEMP_DEX);
+        ShadowUtility.triggerGeneralShadowEffect(this);
     }
 
     private void applyTemporaryDexterity(AbstractPlayer p, int amount) {
@@ -57,19 +59,19 @@ public class Nightlight extends BaseCard {
         addToBot(new ApplyPowerAction(p, p, new LoseDexterityPower(p, amount), amount));
     }
 
+    @Override
     public void triggerHalfEffect() {
         AbstractPlayer p = AbstractDungeon.player;
-        applyTemporaryDexterity(p, HALF_TEMP_DEX);  // Gain half the Temporary Dexterity
+        applyTemporaryDexterity(p, HALF_TEMP_DEX);
     }
 
+    @Override
     public void triggerShadowplayEffect() {
         AbstractPlayer p = AbstractDungeon.player;
-        // Play VFX if not played
         if (!vfxPlayed) {
-            this.addToBot(new VFXAction(new NightlightEffect(), 2.0F));
+            addToBot(new VFXAction(new NightlightEffect(), 2.0F));
             vfxPlayed = true;
         }
-        // Apply Weak to ALL enemies
         for (AbstractMonster monster : AbstractDungeon.getCurrRoom().monsters.monsters) {
             addToBot(new ApplyPowerAction(monster, p, new WeakPower(monster, this.magicNumber, false), this.magicNumber));
         }
@@ -79,7 +81,9 @@ public class Nightlight extends BaseCard {
     public List<TooltipInfo> getCustomTooltips() {
         if (this.customTooltips == null) {
             this.customTooltips = new ArrayList<>();
-            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow",
+                    "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL " +
+                            "Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
             this.customTooltips.add(shadowTooltip);
         }
         return this.customTooltips;

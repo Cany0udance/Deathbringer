@@ -10,12 +10,10 @@ public class VirulencePower extends BasePower {
         super(POWER_ID, PowerType.BUFF, false, owner, amount);
         updateDescription();
     }
-
     @Override
     public void updateDescription() {
         description = String.format(DESCRIPTIONS[0], amount);
     }
-
     @Override
     public void stackPower(int stackAmount) {
         super.stackPower(stackAmount);

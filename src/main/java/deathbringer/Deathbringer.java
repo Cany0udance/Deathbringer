@@ -6,6 +6,7 @@ import basemod.abstracts.CustomSavable;
 import basemod.interfaces.*;
 import deathbringer.cards.BaseCard;
 import deathbringer.cards.attacks.ChainedHits;
+import deathbringer.cards.skills.LightsOut;
 import deathbringer.potions.BasePotion;
 import deathbringer.powers.ExtinctionMarkPower;
 import deathbringer.relics.BaseRelic;
@@ -59,10 +60,12 @@ public class Deathbringer implements
         AddAudioSubscriber,
         PostDungeonInitializeSubscriber,
         CustomSavable<HashMap<String, Boolean>> {
+
     public static ModInfo info;
-    public static String modID; //Edit your pom.xml to change this
+    public static String modID;
     static { loadModInfo(); }
-    public static final Logger logger = LogManager.getLogger(modID); //Used to output to the console.
+    public static final Logger logger = LogManager.getLogger(modID);
+
     private static final String resourcesFolder = "deathbringer";
     private static final String BG_ATTACK = characterPath("cardback/bg_attack.png");
     private static final String BG_ATTACK_P = characterPath("cardback/bg_attack_p.png");
@@ -76,8 +79,8 @@ public class Deathbringer implements
     private static final Color cardColor = new Color(129f/255f, 20f/255f, 20f/255f, 1f);
     private static final String CHAR_SELECT_BUTTON = characterPath("select/button.png");
     private static final String CHAR_SELECT_PORTRAIT = characterPath("select/portrait.png");
-    public static final Color RED_BORDER_GLOW_COLOR = new Color(1.0f, 0.0f, 0.0f, 0.5f); // Red color
 
+    public static final Color RED_BORDER_GLOW_COLOR = new Color(1.0f, 0.0f, 0.0f, 0.5f);
     public static final String UNSHEATHE_KEY = "Unsheathe";
     public static final String UNSHEATHE_OGG = "deathbringer/audio/unsheathe.ogg";
     public static final String CLEANKILL_KEY = "CleanKill";
@@ -86,22 +89,17 @@ public class Deathbringer implements
     public static final String FLASHLIGHTON_OGG = "deathbringer/audio/FlashlightOn.ogg";
     public static final String FLASHLIGHTOFF_KEY = "FlashlightOff";
     public static final String FLASHLIGHTOFF_OGG = "deathbringer/audio/FlashlightOff.ogg";
+
     private static int permanentStrengthGain = 0;
     public static int chainedHitsCounter = 2;
     public static int shadowplaysThisCombat = 0;
 
-
-    //This is used to prefix the IDs of various objects like cards and relics,
-    //to avoid conflicts between different mods using the same name for things.
     public static String makeID(String id) {
         return modID + ":" + id;
     }
 
-    //This will be called by ModTheSpire because of the @SpireInitializer annotation at the top of the class.
     public static void initialize() {
-
         new Deathbringer();
-
         BaseMod.addColor(deathbringer.character.Deathbringer.Enums.CARD_COLOR, cardColor,
                 BG_ATTACK, BG_SKILL, BG_POWER, ENERGY_ORB,
                 BG_ATTACK_P, BG_SKILL_P, BG_POWER_P, ENERGY_ORB_P,
@@ -110,26 +108,33 @@ public class Deathbringer implements
 
     public Deathbringer() {
         BaseMod.subscribe(this);
-        BaseMod.addSaveField(makeID("enemiesMarkedForExtinction"), this); // Register the save field
+        BaseMod.addSaveField(makeID("enemiesMarkedForExtinction"), this);
         logger.info(modID + " subscribed to BaseMod.");
     }
 
     @Override
     public void receiveOnPlayerTurnStart() {
+        // Handle Extinction Mark power
         for (AbstractMonster m : AbstractDungeon.getCurrRoom().monsters.monsters) {
             if (m.hasPower(ExtinctionMarkPower.POWER_ID)) {
                 AbstractDungeon.actionManager.addToBottom(new InstantKillAction(m));
             }
-            ShadowUtility.resetFirstShadowplayTrigger();
         }
-    }
 
+        // Reset shadow system state for the new turn
+        ShadowUtility.resetFirstShadowplayTrigger();
+        LightsOut.resetRecursionGuard();
+    }
 
     @Override
     public void receivePostDungeonInitialize() {
         shadowplaysThisCombat = 0;
-        permanentStrengthGain = 0;  // Reset the permanent Strength gain
+        permanentStrengthGain = 0;
         chainedHitsCounter = 2;
+
+        // Reset shadow system for new run
+        ShadowUtility.resetCombatState();
+        LightsOut.resetRecursionGuard();
     }
 
     @Override
@@ -140,47 +145,52 @@ public class Deathbringer implements
         BaseMod.addAudio(FLASHLIGHTOFF_KEY, FLASHLIGHTOFF_OGG);
     }
 
-    // Reset at the start of each combat if necessary
-
     @Override
-    public void receiveEditRelics() { //somewhere in the class
-        new AutoAdd(modID) //Loads files from this mod
-                .packageFilter(BaseRelic.class) //In the same package as this class
-                .any(BaseRelic.class, (info, relic) -> { //Run this code for any classes that extend this class
+    public void receiveEditRelics() {
+        new AutoAdd(modID)
+                .packageFilter(BaseRelic.class)
+                .any(BaseRelic.class, (info, relic) -> {
                     if (relic.pool != null)
-                        BaseMod.addRelicToCustomPool(relic, relic.pool); //Register a custom character specific relic
+                        BaseMod.addRelicToCustomPool(relic, relic.pool);
                     else
-                        BaseMod.addRelic(relic, relic.relicType); //Register a shared or base game character specific relic
+                        BaseMod.addRelic(relic, relic.relicType);
                 });
     }
 
     @Override
     public void receiveOnBattleStart(AbstractRoom room) {
+        // Reset combat counters
         shadowplaysThisCombat = 0;
-        globalCardsToReplay.clear();
+        chainedHitsCounter = 2;
+
+        // Reset shadow system state for new combat
+        ShadowUtility.resetCombatState();
+        LightsOut.resetRecursionGuard();
+
+        // Clear any existing global card lists
+        if (globalCardsToReplay != null) {
+            globalCardsToReplay.clear();
+        }
+
+        // Apply permanent strength if any
         if (permanentStrengthGain > 0) {
             AbstractDungeon.actionManager.addToBottom(
                     new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player,
                             new StrengthPower(AbstractDungeon.player, permanentStrengthGain), permanentStrengthGain)
             );
         }
-        ShadowUtility.shatteredTriggered = false;
-        ShadowUtility.clothTriggered = false;
-        resetNightlightVFX();
-        chainedHitsCounter = 2;
 
-        // Reset the magic numbers for all instances of ChainedHits in all relevant piles
-        for (AbstractCard c : AbstractDungeon.player.hand.group) {
-            if (c instanceof ChainedHits) {
-                ((ChainedHits) c).resetChainedHitsMagicNumber();
-            }
-        }
-        for (AbstractCard c : AbstractDungeon.player.drawPile.group) {
-            if (c instanceof ChainedHits) {
-                ((ChainedHits) c).resetChainedHitsMagicNumber();
-            }
-        }
-        for (AbstractCard c : AbstractDungeon.player.discardPile.group) {
+        // Reset other systems
+        resetNightlightVFX();
+
+        // Reset ChainedHits magic numbers in all card piles
+        resetChainedHitsInPile(AbstractDungeon.player.hand.group);
+        resetChainedHitsInPile(AbstractDungeon.player.drawPile.group);
+        resetChainedHitsInPile(AbstractDungeon.player.discardPile.group);
+    }
+
+    private void resetChainedHitsInPile(ArrayList<AbstractCard> pile) {
+        for (AbstractCard c : pile) {
             if (c instanceof ChainedHits) {
                 ((ChainedHits) c).resetChainedHitsMagicNumber();
             }
@@ -191,20 +201,24 @@ public class Deathbringer implements
     public void receivePostBattle(AbstractRoom room) {
         chainedHitsCounter = 2;
         shadowplaysThisCombat = 0;
+
+        // Reset shadow system after battle
+        ShadowUtility.resetCombatState();
+        LightsOut.resetRecursionGuard();
     }
 
     // Implement CustomSavable
     @Override
     public HashMap<String, Boolean> onSave() {
         savePermanentStrengthGain();
-        return enemiesMarkedForExtinction; // Replace with your actual HashMap
+        return enemiesMarkedForExtinction;
     }
 
     public static void addPermanentStrength(int amount) {
         permanentStrengthGain += amount;
     }
 
-    // To save permanentStrengthGain when needed
+    // Permanent strength save/load system
     private Preferences prefs;
 
     private Preferences getPrefs() {
@@ -228,7 +242,7 @@ public class Deathbringer implements
     @Override
     public void onLoad(HashMap<String, Boolean> loadedMap) {
         if (loadedMap != null) {
-            enemiesMarkedForExtinction = loadedMap; // Replace with your actual HashMap
+            enemiesMarkedForExtinction = loadedMap;
             loadPermanentStrengthGain();
         }
     }
@@ -236,46 +250,31 @@ public class Deathbringer implements
     @Override
     public void receivePostInitialize() {
         registerPotions();
-        //This loads the image used as an icon in the in-game mods menu.
         Texture badgeTexture = TextureLoader.getTexture(imagePath("badge.png"));
-        //Set up the mod information displayed in the in-game mods menu.
-        //The information used is taken from your pom.xml file.
         BaseMod.registerModBadge(badgeTexture, info.Name, GeneralUtils.arrToString(info.Authors), info.Description, null);
     }
 
     /*----------Localization----------*/
-
-    //This is used to load the appropriate localization files based on language.
-    private static String getLangString()
-    {
+    private static String getLangString() {
         return Settings.language.name().toLowerCase();
     }
-    private static final String defaultLanguage = "eng";
 
+    private static final String defaultLanguage = "eng";
     public static final Map<String, KeywordInfo> keywords = new HashMap<>();
 
     @Override
     public void receiveEditStrings() {
-        /*
-            First, load the default localization.
-            Then, if the current language is different, attempt to load localization for that language.
-            This results in the default localization being used for anything that might be missing.
-            The same process is used to load keywords slightly below.
-        */
-        loadLocalization(defaultLanguage); //no exception catching for default localization; you better have at least one that works.
+        loadLocalization(defaultLanguage);
         if (!defaultLanguage.equals(getLangString())) {
             try {
                 loadLocalization(getLangString());
-            }
-            catch (GdxRuntimeException e) {
+            } catch (GdxRuntimeException e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void loadLocalization(String lang) {
-        //While this does load every type of localization, most of these files are just outlines so that you can see how they're formatted.
-        //Feel free to comment out/delete any that you don't end up using.
         BaseMod.loadCustomStringsFile(CardStrings.class,
                 localizationPath(lang, "CardStrings.json"));
         BaseMod.loadCustomStringsFile(CharacterStrings.class,
@@ -295,27 +294,22 @@ public class Deathbringer implements
     }
 
     @Override
-    public void receiveEditKeywords()
-    {
+    public void receiveEditKeywords() {
         Gson gson = new Gson();
         String json = Gdx.files.internal(localizationPath(defaultLanguage, "Keywords.json")).readString(String.valueOf(StandardCharsets.UTF_8));
         KeywordInfo[] keywords = gson.fromJson(json, KeywordInfo[].class);
         for (KeywordInfo keyword : keywords) {
             registerKeyword(keyword);
         }
-
         if (!defaultLanguage.equals(getLangString())) {
-            try
-            {
+            try {
                 json = Gdx.files.internal(localizationPath(getLangString(), "Keywords.json")).readString(String.valueOf(StandardCharsets.UTF_8));
                 keywords = gson.fromJson(json, KeywordInfo[].class);
                 for (KeywordInfo keyword : keywords) {
                     keyword.prep();
                     registerKeyword(keyword);
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 logger.warn(modID + " does not support " + getLangString() + " keywords.");
             }
         }
@@ -323,13 +317,12 @@ public class Deathbringer implements
 
     private void registerKeyword(KeywordInfo info) {
         BaseMod.addKeyword(modID.toLowerCase(), info.PROPER_NAME, info.NAMES, info.DESCRIPTION);
-        if (!info.ID.isEmpty())
-        {
+        if (!info.ID.isEmpty()) {
             keywords.put(info.ID, info);
         }
     }
 
-    //These methods are used to generate the correct filepaths to various parts of the resources folder.
+    // Path helper methods
     public static String localizationPath(String lang, String file) {
         return resourcesFolder + "/localization/" + lang + "/" + file;
     }
@@ -337,20 +330,21 @@ public class Deathbringer implements
     public static String imagePath(String file) {
         return resourcesFolder + "/images/" + file;
     }
+
     public static String characterPath(String file) {
         return resourcesFolder + "/images/character/" + file;
     }
+
     public static String powerPath(String file) {
         return resourcesFolder + "/images/powers/" + file;
     }
+
     public static String relicPath(String file) {
         return resourcesFolder + "/images/relics/" + file;
     }
 
-
-    //This determines the mod's ID based on information stored by ModTheSpire.
     private static void loadModInfo() {
-        Optional<ModInfo> infos = Arrays.stream(Loader.MODINFOS).filter((modInfo)->{
+        Optional<ModInfo> infos = Arrays.stream(Loader.MODINFOS).filter((modInfo) -> {
             AnnotationDB annotationDB = Patcher.annotationDBMap.get(modInfo.jarURL);
             if (annotationDB == null)
                 return false;
@@ -360,8 +354,7 @@ public class Deathbringer implements
         if (infos.isPresent()) {
             info = infos.get();
             modID = info.ID;
-        }
-        else {
+        } else {
             throw new RuntimeException("Failed to determine mod info/ID based on initializer.");
         }
     }
@@ -373,22 +366,18 @@ public class Deathbringer implements
     }
 
     public static void registerPotions() {
-        new AutoAdd(modID) //Loads files from this mod
-                .packageFilter(BasePotion.class) //In the same package as this class
-                .any(BasePotion.class, (info, potion) -> { //Run this code for any classes that extend this class
-                    //These three null parameters are colors.
-                    //If they're not null, they'll overwrite whatever color is set in the potions themselves.
-                    //This is an old feature added before having potions determine their own color was possible.
+        new AutoAdd(modID)
+                .packageFilter(BasePotion.class)
+                .any(BasePotion.class, (info, potion) -> {
                     BaseMod.addPotion(potion.getClass(), null, null, null, potion.ID, potion.playerClass);
-                    //playerClass will make a potion character-specific. By default, it's null and will do nothing.
                 });
     }
 
     @Override
     public void receiveEditCards() {
-        new AutoAdd(modID) //Loads files from this mod
-                .packageFilter(BaseCard.class) //In the same package as this class
-                .setDefaultSeen(true) //And marks them as seen in the compendium
-                .cards(); //Adds the cards
+        new AutoAdd(modID)
+                .packageFilter(BaseCard.class)
+                .setDefaultSeen(true)
+                .cards();
     }
 }

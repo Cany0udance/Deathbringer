@@ -18,13 +18,4 @@ public class NecrosisPower extends BasePower {
     public void updateDescription() {
         description = DESCRIPTIONS[0] + amount + DESCRIPTIONS[1];
     }
-
-    @Override
-    public void atStartOfTurn() {
-        // Apply Poison at the start of the player's turn
-        if (!owner.isDeadOrEscaped()) {
-            this.flash();
-            addToBot(new ApplyPowerAction(owner, owner, new PoisonPower(owner, owner, this.amount), this.amount));
-        }
-    }
 }

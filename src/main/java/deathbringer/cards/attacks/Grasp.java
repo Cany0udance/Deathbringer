@@ -21,28 +21,26 @@ public class Grasp extends BaseCard {
             CardTarget.ENEMY,
             1
     );
-
     private static final int DAMAGE = 9;
     private static final int UPG_DAMAGE = 12;
-
     private static final int POISON = 4;
     private static final int UPG_POISON = 5;
 
     public Grasp() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
-        this.magicNumber = this.baseMagicNumber = POISON;  // Set the magic number
+        this.magicNumber = this.baseMagicNumber = POISON;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_VERTICAL));
+
         addToBot(new AbstractGameAction() {
             @Override
             public void update() {
-                float currentHealthPercent = ((float) m.currentHealth / m.maxHealth) * 100;
-                if (currentHealthPercent <= 50) {
-                    addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, magicNumber), magicNumber));  // Use the magic number
+                if (p.hasPower(PoisonPower.POWER_ID)) {
+                    addToBot(new ApplyPowerAction(m, p, new PoisonPower(m, p, magicNumber), magicNumber));
                 }
                 this.isDone = true;
             }
@@ -59,7 +57,7 @@ public class Grasp extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeDamage(UPG_DAMAGE - DAMAGE);
-            upgradeMagicNumber(UPG_POISON - POISON);  // Upgrade the magic number
+            upgradeMagicNumber(UPG_POISON - POISON);
             initializeDescription();
         }
     }

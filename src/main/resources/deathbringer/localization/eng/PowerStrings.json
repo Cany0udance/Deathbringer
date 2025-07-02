@@ -75,7 +75,7 @@
   "${modID}:RiskyBusinessPower": {
     "NAME": "Risky Business",
     "DESCRIPTIONS": [
-      "Whenever you gain Poison, draw #b%d %s."
+      "Whenever you gain #yPoison, draw #b%d %s."
     ]
   },
   "${modID}:ThrivePower": {
@@ -102,13 +102,13 @@
   "${modID}:DominatePower": {
     "NAME": "Dominate",
     "DESCRIPTIONS": [
-      "Whenever you apply #yPoison to an enemy, also apply #b%d #yWeak and #b%d #yVulnerable."
+      "Whenever you apply #yPoison, apply #b%d #yWeak and #yVulnerable."
     ]
   },
   "${modID}:VirulencePower": {
     "NAME": "Virulence",
     "DESCRIPTIONS": [
-      "Whenever an enemy gains #yPoison, they gain an additional #b%d #yPoison."
+      "Whenever you apply #yPoison, apply an additional #b%d #yPoison."
     ]
   },
   "${modID}:TradePower": {
@@ -136,7 +136,7 @@
     "NAME": "Necrosis",
     "DESCRIPTIONS": [
       "This creature will gain #b",
-      " #yPoison per turn."
+      " #yPoison whenever you gain #yPoison."
     ]
   }
 }

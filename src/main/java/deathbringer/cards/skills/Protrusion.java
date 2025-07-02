@@ -3,6 +3,7 @@ package deathbringer.cards.skills;
 import basemod.helpers.TooltipInfo;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
+import deathbringer.interfaces.ShadowEffectable;
 import deathbringer.util.CardStats;
 import deathbringer.util.ShadowUtility;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
@@ -16,7 +17,7 @@ import com.megacrit.cardcrawl.powers.ThornsPower;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Protrusion extends BaseCard {
+public class Protrusion extends BaseCard implements ShadowEffectable {
     public static final String ID = makeID("Protrusion");
     private static final CardStats info = new CardStats(
             Deathbringer.Enums.CARD_COLOR,
@@ -25,10 +26,8 @@ public class Protrusion extends BaseCard {
             CardTarget.SELF,
             1
     );
-
     private static final int BLOCK = 8;
     private static final int UPG_BLOCK = 2;
-
     private static final int MAGIC = 2;
     private static final int UPG_MAGIC = 2;
     private List<TooltipInfo> customTooltips = null;
@@ -36,33 +35,40 @@ public class Protrusion extends BaseCard {
     public Protrusion() {
         super(ID, info);
         setBlock(BLOCK, UPG_BLOCK);
-        this.magicNumber = this.baseMagicNumber = MAGIC; // Setting magicNumber for Thorns
+        this.magicNumber = this.baseMagicNumber = MAGIC;
         this.tags.add(Deathbringer.Enums.SHADOW);
         this.tags.add(Deathbringer.Enums.SHADOWPLAY);
-        setBackgroundTexture("deathbringer/images/character/cardback/shadowskill.png", "deathbringer/images/character/cardback/shadowskill_p.png");
-        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png", "deathbringer/images/character/cardback/shadowenergyorb_p.png");
+        setBackgroundTexture("deathbringer/images/character/cardback/shadowskill.png",
+                "deathbringer/images/character/cardback/shadowskill_p.png");
+        setOrbTexture("deathbringer/images/character/cardback/shadowenergyorb.png",
+                "deathbringer/images/character/cardback/shadowenergyorb_p.png");
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         addToBot(new GainBlockAction(p, p, block));
-
         ShadowUtility.triggerGeneralShadowEffect(this);
     }
 
+    @Override
     public void triggerHalfEffect() {
-        addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, block / 2));
+        AbstractPlayer p = AbstractDungeon.player;
+        addToBot(new GainBlockAction(p, p, block / 2));
     }
 
+    @Override
     public void triggerShadowplayEffect() {
-        addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new ThornsPower(AbstractDungeon.player, magicNumber), magicNumber));
+        AbstractPlayer p = AbstractDungeon.player;
+        addToBot(new ApplyPowerAction(p, p, new ThornsPower(p, magicNumber), magicNumber));
     }
 
     @Override
     public List<TooltipInfo> getCustomTooltips() {
         if (this.customTooltips == null) {
             this.customTooltips = new ArrayList<>();
-            TooltipInfo shadowTooltip = new TooltipInfo("Shadow", "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
+            TooltipInfo shadowTooltip = new TooltipInfo("Shadow",
+                    "#yShadow #ycards #yare #ydesignated #yby #ya #ydifferent #ycard #ybackground #yand #yenergy #yicon. NL NL " +
+                            "Whenever you play a Shadow card, another random Shadow card in your hand has its actions triggered at half effectiveness, then is discarded.");
             this.customTooltips.add(shadowTooltip);
         }
         return this.customTooltips;
@@ -73,7 +79,7 @@ public class Protrusion extends BaseCard {
         if (!upgraded) {
             upgradeName();
             upgradeBlock(UPG_BLOCK);
-            upgradeMagicNumber(UPG_MAGIC); // Upgrading magicNumber
+            upgradeMagicNumber(UPG_MAGIC);
             initializeDescription();
         }
     }

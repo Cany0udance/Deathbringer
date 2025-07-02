@@ -75,7 +75,7 @@
   },
   "${modID}:Eclipse": {
     "NAME": "Eclipse",
-    "DESCRIPTION": "Deal !D! damage. NL If this card is discarded from your hand, swap the contents of your draw and discard piles."
+    "DESCRIPTION": "Gain !M! Poison twice. NL Deal !D! damage twice."
   },
   "${modID}:Shroud": {
     "NAME": "Shroud",
@@ -206,11 +206,11 @@
   },
   "${modID}:Grasp": {
     "NAME": "Grasp",
-    "DESCRIPTION": "Deal !D! damage. NL If the enemy is at or below 50% HP, apply !M! Poison."
+    "DESCRIPTION": "Deal !D! damage. NL If you have Poison, apply !M! Poison."
   },
   "${modID}:NecroticJab": {
     "NAME": "Necrotic Jab",
-    "DESCRIPTION": "Deal !D! damage twice. NL Enemy will gain !M! Poison each turn."
+    "DESCRIPTION": "Deal !D! damage twice. NL Enemy gains !M! Poison whenever you gain Poison."
   },
   "${modID}:NothingPersonal": {
     "NAME": "Nothing Personal",
@@ -282,11 +282,12 @@
   },
   "${modID}:Harvest": {
     "NAME": "Harvest",
-    "DESCRIPTION": "Deal !D! damage. NL If this kills an enemy, draw 2 cards and reduce their cost to 0 this turn."
+    "DESCRIPTION": "Deal !D! damage. NL If this kills an enemy, draw !M! cards."
   },
   "${modID}:SkeletalFinger": {
     "NAME": "Skeletal Finger",
-    "DESCRIPTION": "Discard ALL ${modID}:Shadow cards in your hand. NL For each card discarded, deal !D! damage."
+    "DESCRIPTION": "Deal !D! damage. NL Put !M! random ${modID}:Shadow card from your discard pile into your hand.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Put !M! random ${modID}:Shadow cards from your discard pile into your hand."
   },
   "${modID}:Skulker": {
     "NAME": "Skulker",
@@ -327,7 +328,7 @@
   },
   "${modID}:Dominate": {
     "NAME": "Dominate",
-    "DESCRIPTION": "Whenever you apply Poison to an enemy, also apply 1 Weak and 1 Vulnerable."
+    "DESCRIPTION": "Whenever you apply Poison, apply 1 Weak and Vulnerable."
   },
   "${modID}:Trade": {
     "NAME": "The Pact",

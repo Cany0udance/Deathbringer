@@ -1,5 +1,8 @@
 package deathbringer.cards.attacks;
 
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import deathbringer.actions.HarvestAction;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
@@ -18,18 +21,28 @@ public class Harvest extends BaseCard {
             CardTarget.ENEMY,
             2 // Energy cost
     );
-
     private static final int DAMAGE = 15;
     private static final int UPG_DAMAGE = 5;
+    private static final int DRAW = 3;
 
     public Harvest() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
+        this.magicNumber = this.baseMagicNumber = DRAW;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new HarvestAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL)));
+        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        addToBot(new AbstractGameAction() {
+            @Override
+            public void update() {
+                if (m.isDying || m.currentHealth <= 0) {
+                    addToTop(new DrawCardAction(magicNumber));
+                }
+                this.isDone = true;
+            }
+        });
     }
 
     @Override

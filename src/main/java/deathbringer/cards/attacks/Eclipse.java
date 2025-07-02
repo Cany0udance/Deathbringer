@@ -1,5 +1,7 @@
 package deathbringer.cards.attacks;
 
+import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.powers.PoisonPower;
 import deathbringer.cards.BaseCard;
 import deathbringer.character.Deathbringer;
 import deathbringer.util.CardStats;
@@ -21,53 +23,34 @@ public class Eclipse extends BaseCard {
             CardTarget.ENEMY,
             2
     );
-
-    private static final int DAMAGE = 16;
-    private static final int UPG_DAMAGE = 6;
+    private static final int DAMAGE = 12;
+    private static final int UPG_DAMAGE = 15;
+    private static final int POISON = 1;
 
     public Eclipse() {
         super(ID, info);
         setDamage(DAMAGE, UPG_DAMAGE);
+        this.magicNumber = this.baseMagicNumber = POISON;
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
-    }
+        // Apply 1 Poison twice
+        for (int i = 0; i < 2; i++) {
+            addToBot(new ApplyPowerAction(p, p, new PoisonPower(p, p, magicNumber), magicNumber));
+        }
 
-    public void triggerOnManualDiscard() {
-        addToBot(new AbstractGameAction() {
-            @Override
-            public void update() {
-                AbstractPlayer p = AbstractDungeon.player;
-                CardGroup temp = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-
-                for (AbstractCard c : p.drawPile.group) {
-                    temp.addToBottom(c);
-                }
-
-                p.drawPile.clear();
-
-                for (AbstractCard c : p.discardPile.group) {
-                    p.drawPile.addToBottom(c);
-                }
-
-                p.discardPile.clear();
-
-                for (AbstractCard c : temp.group) {
-                    p.discardPile.addToBottom(c);
-                }
-
-                this.isDone = true;
-            }
-        });
+        // Deal damage twice
+        for (int i = 0; i < 2; i++) {
+            addToBot(new DamageAction(m, new DamageInfo(p, damage, DamageInfo.DamageType.NORMAL), AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+        }
     }
 
     @Override
     public void upgrade() {
         if (!upgraded) {
             upgradeName();
-            upgradeDamage(UPG_DAMAGE);
+            upgradeDamage(UPG_DAMAGE - DAMAGE);
             initializeDescription();
         }
     }
